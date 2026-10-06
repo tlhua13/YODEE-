@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="momo_transaction_view_tree" model="ir.ui.view">
+        <field name="name">momo.transaction.tree</field>
+        <field name="model">momo.transaction</field>
+        <field name="arch" type="xml">
+            <list string="MoMo Transactions">
+                <field name="name"/>
+                <field name="pos_order_id"/>
+                <field name="pos_order_name"/>
+                <field name="amount"/>
+                <field name="state" widget="badge"
+                    decoration-success="state == 'done'"
+                    decoration-danger="state == 'failed'"
+                    decoration-warning="state == 'pending'"
+                    decoration-info="state == 'draft'"/>
+                <field name="is_manual"/>
+                <field name="trans_id"/>
+                <field name="create_date"/>
+                <field name="message"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="momo_transaction_view_form" model="ir.ui.view">
+        <field name="name">momo.transaction.form</field>
+        <field name="model">momo.transaction</field>
+        <field name="arch" type="xml">
+            <form string="MoMo Transaction">
+                <header>
+                    <button name="action_print_qr" type="object" string="Print QR Code"
+                            class="btn-primary" icon="fa-print"
+                            invisible="not qr_code_image"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,pending,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Order Info">
+                            <field name="name"/>
+                            <field name="request_id"/>
+                            <field name="pos_order_id"/>
+                            <field name="pos_order_name"/>
+                            <field name="amount"/>
+                            <field name="order_info"/>
+                        </group>
+                        <group string="MoMo Response">
+                            <field name="partner_code"/>
+                            <field name="trans_id"/>
+                            <field name="result_code"/>
+                            <field name="message"/>
+                            <field name="is_manual"/>
+                            <field name="pay_url" widget="url"/>
+                            <field name="qr_code_url" widget="url"/>
+                        </group>
+                    </group>
+                    <group string="References">
+                        <field name="payment_method_id"/>
+                        <field name="pos_session_id"/>
+                    </group>
+                    <notebook>
+                        <page string="Chữ ký (Signature)" invisible="not momo_signature_json">
+                            <field name="momo_signature_text" readonly="1" nolabel="1"/>
+                        </page>
+                        <page string="Dữ liệu gửi MoMo" invisible="not momo_request_json">
+                            <field name="momo_request_text" readonly="1" nolabel="1"/>
+                        </page>
+                        <page string="Dữ liệu trả về MoMo" invisible="not momo_response_json">
+                            <field name="momo_response_text" readonly="1" nolabel="1"/>
+                        </page>
+                        <page string="Callback Data" invisible="not callback_data">
+                            <field name="callback_data"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="momo_transaction_action" model="ir.actions.act_window">
+        <field name="name">MoMo Transactions</field>
+        <field name="res_model">momo.transaction</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No MoMo transactions yet
+            </p>
+            <p>
+                MoMo payment transactions from POS will appear here.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="momo_menu_root"
+        name="MoMo"
+        web_icon="advanced_momo,static/description/icon.png"
+        sequence="100"/>
+
+    <menuitem id="momo_menu_transactions"
+        name="Transactions"
+        parent="momo_menu_root"
+        action="momo_transaction_action"
+        sequence="10"/>
+
+    <menuitem id="momo_menu_settings"
+        name="Settings"
+        parent="momo_menu_root"
+        action="action_momo_config_settings"
+        sequence="20"/>
+
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="advanced_pos_view_company_form" model="ir.ui.view">
+            <field name="name">advanced_pos.view_company_form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='mobile']" position="after">
+                    <field name="hotline" class="o_force_ltr"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

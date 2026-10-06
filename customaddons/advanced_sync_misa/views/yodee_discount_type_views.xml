@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="yodee_discount_type_form_view" model="ir.ui.view">
+            <field name="name">yodee.discount.type.form</field>
+            <field name="model">yodee.discount.type</field>
+            <field name="arch" type="xml">
+                <form string="Loại chiết khấu">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="discount_percentage" widget="percentage"/>
+                            <field name="discount_amount"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="yodee_discount_type_list_view" model="ir.ui.view">
+            <field name="name">yodee.discount.type.list</field>
+            <field name="model">yodee.discount.type</field>
+            <field name="arch" type="xml">
+                <list string="Loại chiết khấu">
+                    <field name="name"/>
+                    <field name="discount_percentage" widget="percentage"/>
+                    <field name="discount_amount"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="yodee_discount_type_act_window" model="ir.actions.act_window">
+            <field name="name">Loại chiết khấu</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">yodee.discount.type</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="yodee_discount_type_menu"
+                  name="Loại chiết khấu"
+                  parent="sale.menu_sale_config"
+                  action="yodee_discount_type_act_window"
+                  sequence="60"/>
+
+    </data>
+</odoo>

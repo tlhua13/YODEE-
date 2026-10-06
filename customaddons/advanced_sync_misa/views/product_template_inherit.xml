@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="advanced_sync_misa_product_template_inherit_form" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.product.template.inherit.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[last()]" position="after">
+                    <page string="Sync Misa" name="sync_misa">
+                        <group>
+                            <group string="Default Account" groups="base.group_no_one">
+                                <field name="misa_account_inventory" force_save="1"/>
+                                <field name="misa_account_revenue" force_save="1"/>
+                                <field name="misa_account_discount" force_save="1"/>
+                                <field name="misa_account_sale" force_save="1"/>
+                                <field name="misa_account_return" force_save="1"/>
+                                <field name="misa_account_expense" force_save="1"/>
+                            </group>
+                            <group string="Unit of Conversion">
+                                <field name="misa_uom_id"/>
+                                <field name="misa_unit_converstion"/>
+                                <field name="misa_unit_convert_rate"/>
+                                <field name="misa_unit_calculation"/>
+                                <field name="misa_unit_note"/>
+                            </group>
+                        </group>
+                        <group string="Inventory">
+                            <group>
+                                <field name="misa_features"/>
+                                <field name="misa_item_group"/>
+                                <field name="misa_inventory_code"/>
+                                <field name="misa_inventory_name"/>
+                            </group>
+                            <group>
+                                <field name="misa_id" readonly="1"/>
+                                <field name="branch_id" readonly="1"/>
+                                <field name="is_sync_misa" readonly="1"/>
+                            </group>
+                        </group>
+
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="advanced_sync_misa_product_template_only_form_view" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.product_template_only_form_view</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='default_code']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='standard_price']" position="attributes">
+                    <attribute name="groups">advanced_sync_misa.group_view_standard_price,base.group_system</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="advanced_sync_misa_product_template_action" model="ir.actions.act_window">
+            <field name="name">Products</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="view_id" ref="product.product_template_kanban_view"/>
+            <field name="search_view_id" ref="product.product_template_search_view"/>
+            <field name="context">{'search_default_is_sync_misa':1}</field>
+
+        </record>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="advanced_sync_misa_product_template_search_view" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.product_template_search_view</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='combo']" position="after">
+                    <separator/>
+                    <filter string="Is Sync Misa" name="is_sync_misa" domain="[('is_sync_misa','=', True)]"/>
+                </xpath>
+                <xpath expr="//group[1]" position="inside">
+                    <filter string="Is Sync Misa" name="group_is_sync_misa" context="{'group_by':'is_sync_misa'}"/>
+                    <!-- Add your fields or attributes here -->
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <record id="product_template_list_view_inherit" model="ir.ui.view">
+            <field name="name">product.template.tree.inherit.pancake.source</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_tree_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//list/field[@name='name']" position="after">
+                    <field name="pancake_brand_ids" widget="many2many_tags"/>
+                </xpath>
+
+                <xpath expr="//list/field[@name='standard_price']" position="attributes">
+                    <attribute name="groups">advanced_sync_misa.group_view_standard_price,base.group_system</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+        <menuitem name="Product Template"
+                  id="advanced_sync_misa_product_template_misa_menu"
+                  parent="advanced_sync_misa.advanced_account_misa_dictionary_menu"
+                  sequence="1000"
+                  action="advanced_sync_misa_product_template_action"/>
+
+    </data>
+</odoo>

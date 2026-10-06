@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="view_pancake_order_source_list" model="ir.ui.view">
+            <field name="name">pancake.order.source.list</field>
+            <field name="model">pancake.order.source</field>
+            <field name="arch" type="xml">
+                <list string="Pancake Order Sources">
+                    <field name="name"/>
+                    <field name="is_b2b_business"/>
+                    <field name="default_customer"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_pancake_order_source_form" model="ir.ui.view">
+            <field name="name">pancake.order.source.form</field>
+            <field name="model">pancake.order.source</field>
+            <field name="arch" type="xml">
+                <form string="Pancake Order Source">
+                    <sheet>
+                        <group name="group_basic_info">
+                            <group>
+                                <field name="name"/>
+                                <field name="pancake_id"/>
+                                <field name="parent_id"/>
+                                <field name="parent_source_id"/>
+                                <field name="is_b2b_business"/>
+                                <field name="default_customer"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_pancake_order_source" model="ir.actions.act_window">
+            <field name="name">Pancake Sources</field>
+            <field name="res_model">pancake.order.source</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+
+        <menuitem id="menu_pancake_order_source"
+                  name="Pancake Sources"
+                  parent="sale.menu_sale_config"
+                  action="action_pancake_order_source"
+                  sequence="12"/>
+    </data>
+</odoo>

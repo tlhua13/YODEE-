@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="pancake_connector_form_view" model="ir.ui.view">
+            <field name="name">pancake.connector.form</field>
+            <field name="model">pancake.connector</field>
+            <field name="arch" type="xml">
+                <form string="Pancake Connector">
+                    <sheet>
+                        <group>
+                            <field name="pancake_url"/>
+                            <field name="pancake_api_key"/>
+                            <field name="shop_id"/>
+                        </group>
+                        <group>
+                            <button string="Test Connection" type="object" name="get_info_pancake"
+                                    class="oe_highlight"/>
+                        </group>
+                        <notebook>
+                            <page name="pancake_address" string="Address Pancake">
+                                <group name="pancake_address_group">
+                                    <field name="param_is_new"/>
+                                    <field name="pancake_url_province"/>
+                                    <field name="params_province_id"/>
+                                    <field name="pancake_url_districts"/>
+                                    <field name="pancake_url_communes"/>
+                                    <field name="params_district_id"/>
+                                    <field name="limit_max"/>
+                                    <field name="limit_min"/>
+                                </group>
+                                <separator string="Actions" colspan="2"/>
+                                <div>
+                                    <button name="get_address_from_pancake"
+                                            string="Get Address Pancake"
+                                            type="object"
+                                            invisible="1"
+                                            class="btn btn-primary oe_highlight"/>
+                                    <button name="button_get_province_from_pancake"
+                                            string="Get Province Pancake"
+                                            type="object"
+                                            class="btn btn-success"/>
+
+                                    <button name="button_get_districts_from_pancake"
+                                            string="Get Districts Pancake"
+                                            type="object"
+                                            class="btn btn-info"/>
+
+                                    <button name="button_get_communes_from_pancake"
+                                            string="Get Communes Pancake"
+                                            type="object"
+                                            class="btn btn-secondary"/>
+                                    <button name="button_get_new_communes_from_pancake"
+                                            string="Get New Communes Pancake"
+                                            type="object"
+                                            class="btn btn-primary oe_highlight"/>
+                                </div>
+                            </page>
+                            <page name="pancake_order" string="Order Pancake">
+                                <group name="pancake_order_group">
+                                    <field name="order_date_from"/>
+                                    <field name="order_date_to"/>
+                                    <field name="order_time"/>
+                                    <field name="order_duration"/>
+                                    <field name="order_page_size"/>
+                                    <field name="order_page"/>
+<!--                                    <field name="list_status"/>-->
+                                    <field name="timeout_minutes_order"/>
+                                    <field name="order_break_day"/>
+                                </group>
+                                <separator string="Actions" colspan="2"/>
+                                <div>
+                                    <button name="get_order_list"
+                                            string="Get Orders List"
+                                            type="object"
+                                            class="btn btn-primary oe_highlight"/>
+                                </div>
+                            </page>
+                            <page name="pancake_product" string="Product Pancake">
+                                <group name="pancake_product_group">
+                                    <field name="product_date_from"/>
+                                    <field name="product_date_to"/>
+                                    <field name="product_time"/>
+                                    <field name="product_duration"/>
+                                    <field name="product_page_size"/>
+                                    <field name="product_page"/>
+                                    <field name="timeout_minutes_product"/>
+                                </group>
+                                <separator string="Actions" colspan="2"/>
+                                <div>
+                                    <button name="get_product_list"
+                                            string="Get Products List"
+                                            type="object"
+                                            class="btn btn-primary oe_highlight"/>
+                                </div>
+                            </page>
+<!--                            <page name="pancake_master_data" string="Get Pancake Master Data">-->
+<!--                                <separator string="Actions" colspan="2"/>-->
+<!--                                <div>-->
+<!--                                    <button name="get_stock_warehouse"-->
+<!--                                            string="Get Warehouses"-->
+<!--                                            type="object"-->
+<!--                                            class="btn btn-primary oe_highlight"/>-->
+<!--                                </div>-->
+<!--                                <div>-->
+<!--                                    <button name="get_stock_warehouse"-->
+<!--                                            string="Get Order Source"-->
+<!--                                            type="object"-->
+<!--                                            class="btn btn-primary oe_highlight"/>-->
+<!--                                </div>-->
+<!--                            </page>-->
+<!--                            <page name="pancake_customer" string="Customer Pancake">-->
+<!--                                <group>-->
+<!--                                    <field name="customer_start_time_update"/>-->
+<!--                                    <field name="customer_end_time_update"/>-->
+<!--                                    <field name="customer_duration"/>-->
+<!--                                    <field name="customer_time"/>-->
+<!--                                    <field name="customer_page_number" readonly="1"/>-->
+<!--                                    <field name="customer_page_size" readonly="1"/>-->
+<!--                                </group>-->
+<!--                                <button name="button_get_customer_from_pancake"-->
+<!--                                        string="Get Customer Pancake"-->
+<!--                                        type="object"-->
+<!--                                        class="btn btn-primary oe_highlight"/>-->
+<!--                            </page>-->
+                            <!--          Không sử dụng                  -->
+                            <!--                             <page name="pancake_sync_product" string="Sync Product">-->
+                            <!--                                 <group>-->
+                            <!--                                    <field name="page_number"/>-->
+                            <!--                                     <field name="page_size"/>-->
+                            <!--                                    <field name="sync_stock_done"/>-->
+                            <!--                                    <field name="last_sync_time" readonly="1"/>-->
+                            <!--                                 </group>-->
+                            <!--                                 <group>-->
+                            <!--                                    <field name="sync_product_date_from"/>-->
+                            <!--                                     <field name="sync_product_date_to"/>-->
+                            <!--                                 </group>-->
+                            <!--                                 <button name="action_sync_stock"-->
+                            <!--                                            string="Sync Stock from Pancake"-->
+                            <!--                                            type="object"-->
+                            <!--                                            class="btn btn-primary oe_highlight"/>-->
+                            <!--                        </page>-->
+                            <!--                            Đồng bộ nhà cung cấp-->
+                            <page name="sync_brands" string="Sync Brand">
+                                <button name="sync_brands"
+                                        string="Sync Brands"
+                                        type="object"
+                                        class="btn btn-primary oe_highlight"/>
+                            </page>
+                            <!--Đồng bộ employee-->
+                            <page name="sync_employees" string="Sync Employee">
+                                <button name="sync_employees"
+                                        string="Sync Employee from Pancake"
+                                        type="object"
+                                        class="btn btn-primary oe_highlight"/>
+                            </page>
+                            <!--Đồng bộ warehouse-->
+                            <page name="sync_warehouse" string="Sync Warehouses">
+                                <button name="sync_warehouse"
+                                        string="Sync Warehouses from Pancake"
+                                        type="object"
+                                        class="btn btn-primary oe_highlight"/>
+                            </page>
+                            <page name="get_pancake_order_id" string="Get order_id">
+                                <group>
+                                    <field name="pancake_order_id"/>
+                                </group>
+                                <button name="action_sync_pancake_order"
+                                        string="Get order"
+                                        type="object"
+                                        class="btn btn-primary oe_highlight"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!--        Mass action -->
+        <record id="model_sale_order_mass_action_get_order_by_id" model="ir.actions.server">
+            <field name="name">Get pancake order id</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_view_types">form,list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.mass_action_get_pancake_order_id()</field>
+        </record>
+        <record id="action_open_pancake_connector" model="ir.actions.server">
+            <field name="name">Pancake Connector</field>
+            <field name="state">code</field>
+            <field name="model_id" ref="model_pancake_connector"/>
+            <field name="code">action = model.action_open_pancake_connector()</field>
+        </record>
+
+
+        <menuitem
+                id="pancake_connector_menu_root"
+                name="Pancake Connector"
+                web_icon="advanced_sync_pancake,static/description/icon.png"/>
+
+        <menuitem
+                id="pancake_connector_menu"
+                name="Pancake Connector"
+                action="action_open_pancake_connector"
+                parent="advanced_sync_pancake.pancake_connector_menu_root"
+                sequence="25"/>
+    </data>
+</odoo>

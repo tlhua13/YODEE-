@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="pancake_connector_1" model="pancake.connector">
+         <field name="pancake_url">https://pos.pages.fm/api/v1</field>
+         <field name="pancake_api_key">885b61a3efc240c281130253bfd6ecf6</field>
+         <field name="shop_id">1328343891</field>
+         <field name="pancake_url_province">/geo/provinces</field>
+         <field name="pancake_url_districts">/geo/districts</field>
+         <field name="pancake_url_communes">/geo/communes</field>
+        </record>
+
+    </data>
+</odoo>

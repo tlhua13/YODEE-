@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="advanced_order_purchase_order_form_inherit" model="ir.ui.view">
+            <field name="name">advanced.order.purchase.order.form.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <!-- Currency Section -->
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name="invoice_purchase_number"/>
+                    <field name="include_invoice_misa"
+                           readonly="state in ['done','cancel']"
+                           groups="base.group_no_one"/>
+
+                    <field name="is_buying_cost"
+                           invisible="is_buying_cost == False"/>
+
+                    <field name="check_currency_vnd" invisible="1"/>
+                </xpath>
+
+                <!-- Header Buttons -->
+                <xpath expr="//header" position="inside">
+                    <button name="sync_misa_purchase_order" class="btn-primary"
+                            type="object" string="Sync Misa"
+                            invisible="(state not in ['purchase','done']) or (misa_status in ['synced'])"/>
+
+                    <!--                    <button name="sync_misa_purchase_invoice_service" class="btn-primary"-->
+                    <!--                            type="object" string="Create Misa Service Invoice"-->
+                    <!--                            invisible="(state not in ['purchase','done']) or (misa_status in ['synced'])"/>-->
+                </xpath>
+                <xpath expr="//page[@name='products']/field[@name='order_line']/list" position="attributes">
+                    <attribute name="limit">100</attribute>
+                </xpath>
+
+                <!-- Product Tree Column Fields -->
+                <xpath expr="//page[@name='products']/field[@name='order_line']/list/field[@name='price_unit']"  position="after">
+                    <field name="standard_price" groups="advanced_sync_misa.group_view_standard_price"/>
+                </xpath>
+                <xpath expr="//page[@name='products']/field[@name='order_line']/list/field[@name='price_unit']"  position="attributes">
+                    <attribute name="groups">advanced_sync_misa.group_view_cost_price</attribute>
+                </xpath>
+                <xpath expr="//page[@name='products']/field[@name='order_line']/list/field[@name='price_subtotal']"  position="attributes">
+                    <attribute name="groups">advanced_sync_misa.group_view_cost_price</attribute>
+                </xpath>
+                <xpath expr="//group[contains(@class,'oe_subtotal_footer')]" position="attributes">
+                    <attribute name="groups">advanced_sync_misa.group_view_cost_price</attribute>
+                </xpath>
+                <xpath expr="//page[@name='products']/field[@name='order_line']/list/field[@name='product_id']"
+                       position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_edit':True}</attribute>
+                </xpath>
+                <xpath expr="//page[@name='products']/field[@name='order_line']/list/field[@name='product_qty']"
+                       position="attributes">
+                    <attribute name="sum">SUM_QTY</attribute>
+                </xpath>
+                <xpath expr="//page[@name='products']/field[@name='order_line']/list/field[@name='qty_received']"
+                       position="attributes">
+                    <attribute name="sum">SUM_QTY_REC</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='products']/field[@name='order_line']/list/field[@name='product_uom'][2]"
+                       position="before">
+                    <field name="is_service" invisible="1"/>
+                    <field name="qty_received_method" force_save="1"  optional="hiden"/>
+                    <field name="misa_account_inventory" force_save="1" style="max-width: 143px !important;" optional="hiden"/>
+                    <field name="misa_account_receivable" force_save="1" style="max-width: 143px !important;" optional="hiden"/>
+                </xpath>
+                <xpath expr="//page[@name='products']/field[@name='order_line']/list/field[@name='taxes_id']" position="after">
+                    <field name="price_tax"  optional="hiden"/>
+
+                </xpath>
+
+                <!-- Sync Misa Page -->
+                <xpath expr="//page[@name='purchase_delivery_invoice']" position="after">
+                    <page string="Sync Misa" name="sync_misa" groups="base.group_no_one">
+                        <group>
+                            <group>
+                                <field name="misa_id"/>
+                                <field name="misa_pu_invoice_id"/>
+                                <field name="finish_sync_misa" readonly="1"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+
+                <!-- Misa Info After Reminder -->
+                <xpath expr="//div[@name='reminder']" position="after">
+
+                    <label for="payment_term_id"/>
+                    <div name="payment_term_id" class="o_row">
+                        <field name="payment_term_id"
+                               readonly="invoice_status == 'invoiced' or state == 'done'"
+                               options="{'no_create': True}"/>
+                    </div>
+
+                    <label for="number_of_days_owed"/>
+                    <div name="number_of_days_owed" class="o_row">
+                        <field name="number_of_days_owed"
+                               force_save="1"
+                               readonly="state in ['done','cancel']"/>
+                    </div>
+
+                    <label for="misa_status" string="Misa Status"/>
+                    <div name="misa_status" class="o_row">
+                        <field name="misa_status" readonly="1"/>
+                    </div>
+
+                    <label for="exchange_rate" string="Exchange Rate"/>
+                    <div name="exchange_rate" class="o_row">
+                        <field name="exchange_rate"
+                               readonly="(state in ['done','cancel']) or (check_currency_vnd == True)"/>
+                    </div>
+
+                    <label for="convert" string="Convert"/>
+                    <div name="convert" class="o_row">
+                        <field name="convert" readonly="state in ['done','cancel']"/>
+                    </div>
+                </xpath>
+
+                <!-- Status Message Banners -->
+                <xpath expr="//h1[1]" position="after">
+                    <field name="misa_status" invisible="1"/>
+
+                    <h2 style="color:#4d4d4d!important;text-align:left"
+                        invisible="(id == False) or (state in ['draft','sent']) or (misa_status != 'not_synced')">
+                        Misa: Unsynchronized
+                        <field name="noti_status_misa"/>
+                    </h2>
+
+                    <h2 style="color:green!important;text-align:left"
+                        invisible="(id == False) or (state in ['draft','sent']) or (misa_status != 'synced')">
+                        Misa: Synchronized
+                        <field name="noti_status_misa"/>
+                    </h2>
+
+                    <h2 style="color:red!important;text-align:left"
+                        invisible="(id == False) or (state in ['draft','sent']) or (misa_status != 'sync_failed')">
+                        Misa: Synchronization Failed
+                        <field name="noti_status_misa"/>
+                    </h2>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <record id="purchase_order_line_view_tree" model="ir.ui.view">
+            <field name="name">purchase.order.line_view_tree</field>
+            <field name="model">purchase.order.line</field>
+            <field name="arch" type="xml">
+                <list string="Ordered Product" create="0" edit="0">
+                    <field name="display_type" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="state" invisible="1"/>
+                    <field name="product_type" invisible="1"/>
+                    <field name="product_uom" invisible="1" groups="!uom.group_uom"/>
+                    <field name="product_uom_category_id" invisible="1"/>
+                    <field name="invoice_lines" invisible="1"/>
+                    <field name="sequence" widget="handle"/>
+                    <field name="order_id" optional="show"/>
+                    <field name="product_id" readonly="state in ['purchase','to approve','done','cancel']"
+                           required="display_type == False"
+                           context="{'partner_id': parent.partner_id, 'quantity': product_qty, 'company_id': parent.company_id}"
+                           force_save="1"
+                           domain="[('purchase_ok', '=', True), '|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"/>
+                    <field name="name" widget="section_and_note_text" optional="hide"/>
+                    <field name="partner_id" string="Nhà cung cấp"/>
+                    <field name="date_approve"/>
+                    <field name="date_planned"/>
+                    <field name="date_planned" optional="hide" required="display_type == False" force_save="1"/>
+                    <field name="analytic_distribution" widget="analytic_distribution" optional="hide"
+                           groups="analytic.group_analytic_accounting"
+                           options="{'product_field': 'product_id', 'business_domain': 'purchase_order'}"/>
+                    <field name="product_qty"/>
+                    <field name="qty_received_manual" invisible="1"/>
+                    <field name="qty_received_method" invisible="1"/>
+                    <field name="qty_received" string="Received"
+                           column_invisible="parent.state not in ['purchase','done']"
+                           readonly="qty_received_method != 'manual'" optional="show"/>
+                    <field name="qty_invoiced" string="Billed"
+                           column_invisible="parent.state not in ['purchase','done']" optional="show"/>
+                    <field name="product_uom" string="UoM" groups="uom.group_uom"
+                           readonly="state in ['purchase','done','cancel']" required="display_type == False"
+                           force_save="1" optional="show"/>
+                    <field name="product_packaging_qty"
+                           invisible="(product_id == False) or (product_packaging_id == False)"
+                           groups="product.group_stock_packaging" optional="show"/>
+                    <field name="product_packaging_id" invisible="product_id == False"
+                           context="{'default_product_id': product_id, 'tree_view_ref':'product.product_packaging_tree_view', 'form_view_ref':'product.product_packaging_form_view'}"
+                           groups="product.group_stock_packaging" optional="show"/>
+                    <field name="price_unit" readonly="qty_invoiced != 0"/>
+                    <button name="action_purchase_history" type="object" icon="fa-history" title="Purchase History"
+                            invisible="id == False"/>
+                    <field name="taxes_id" widget="many2many_tags"
+                           domain="[('type_tax_use','=','purchase'), ('company_id', '=', parent.company_id), ('country_id', '=', parent.tax_country_id)]"
+                           context="{'default_type_tax_use': 'purchase', 'search_view_ref': 'account.account_tax_view_search'}"
+                           options="{'no_create': True}" optional="hide"/>
+                    <field name="price_subtotal" widget="monetary"/>
+                    <field name="price_total" invisible="1"/>
+                    <field name="price_tax" invisible="1"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="advanced_order_purchase_order_line_search" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.purchase_order_line_search</field>
+            <field name="model">purchase.order.line</field>
+            <field name="inherit_id" ref="purchase.purchase_order_line_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='hide_cancelled']" position="before">
+                    <filter name="qty_received_1" string="Hàng đã về" domain="[('qty_received', '>', 0)]"/>
+                    <filter name="qty_received_2" string="Hàng chưa về" domain="[('qty_received', '=', 0)]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_purchase_order_line" model="ir.actions.act_window">
+            <field name="name">Ordered Product</field>
+            <field name="res_model">purchase.order.line</field>
+            <field name="view_mode">list</field>
+            <field name="view_id" ref="purchase_order_line_view_tree"/>
+            <field name="domain">[('state', 'in', ['purchase','done'])]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="purchase_order_view_search_inherit_misa" model="ir.ui.view">
+            <field name="name">purchase.order.search.inherit.misa.status</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <field name="invoice_purchase_number"/>
+                    <separator/>
+                    <filter name="misa_not_synced"
+                            string="Chưa đồng bộ MISA"
+                            domain="[('misa_status','=','not_synced')]"/>
+                    <filter name="misa_synced"
+                            string="Đã đồng bộ MISA"
+                            domain="[('misa_status','=','synced')]"/>
+                    <filter name="misa_sync_failed"
+                            string="Đông bộ không thành công Misa"
+                            domain="[('misa_status','=','sync_failed')]"/>
+
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Mass action -->
+        <record id="action_purchase_order_misa_sync" model="ir.actions.server">
+            <field name="name">MISA synchronization</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="state">code</field>
+            <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+            <field name="binding_view_types">list</field>
+            <field name="code">action = records.sync_misa_purchase_order_list()</field>
+        </record>
+
+        <!--   inherit purchase_order list view-->
+        <record id="purchase_order_list_view_search_inherit_misa" model="ir.ui.view">
+            <field name="name">purchase.order.list.view.inherit.misa</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_kpis_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//list" position="inside">
+                    <field name="misa_status"
+                           widget="badge"
+                           decoration-success="misa_status == 'synced'"
+                           decoration-danger="misa_status == 'sync_failed'"
+                           decoration-muted="misa_status == 'not_synced'"
+                    />
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="invoice_purchase_number"/>
+                </xpath>
+                <xpath expr="//field[@name='amount_untaxed']" position="replace">
+                    <field name="amount_untaxed"
+                           string="Untaxed"
+                           widget="monetary"
+                           optional="show"
+                           groups="advanced_sync_misa.group_view_cost_price,base.group_system"/>
+                </xpath>
+
+
+
+            </field>
+        </record>
+        
+        <record id="model_purchase_order_mass_action_reconfirm_sync_misa" model="ir.actions.server">
+            <field name="name">Reconfirm MISA synchronization</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+            <field name="binding_view_types">form,list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.sync_misa_purchase_order()</field>
+        </record>
+
+        <record id="purchase_report_search_inherit_currency" model="ir.ui.view">
+            <field name="name">purchase.report.search.currency</field>
+            <field name="model">purchase.report</field>
+            <field name="inherit_id" ref="purchase.view_purchase_order_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='filter_date_approve']" position="after">
+                    <filter string="USD"
+                            name="currency_usd"
+                            domain="[('order_currency_code','=','USD')]"/>
+
+                    <filter string="VND"
+                            name="currency_vnd"
+                            domain="[('order_currency_code','=','VND')]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="purchase_report_graph_inherit" model="ir.ui.view">
+            <field name="name">purchase.report.graph.original.currency.inherit</field>
+            <field name="model">purchase.report</field>
+            <field name="inherit_id" ref="purchase.view_purchase_order_graph"/>
+            <field name="arch" type="xml">
+                <xpath expr="//graph/field[@name='untaxed_total']" position="after">
+                                        <field name="price_subtotal_original_currency" />
+                                        <field name="price_total_original_currency" />
+                </xpath>
+            </field>
+        </record>
+
+        <menuitem id="menu_action_purchase_order_line"
+                  action="action_purchase_order_line"
+                  parent="purchase.menu_procurement_management"
+                  name="Ordered Product"
+                  sequence="99"/>
+    </data>
+</odoo>

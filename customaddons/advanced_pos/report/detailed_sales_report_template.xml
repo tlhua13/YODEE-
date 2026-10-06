@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sale_report_pdf">
+        <t t-name="advanced_pos.sale_report_pdf">
+
+            <t t-call="web.external_layout">
+
+                <!-- STYLE CHUẨN PDF -->
+                <style>
+                    body {
+                        font-family: "Liberation Serif", serif;
+                        font-size: 11px;
+                        justify-content: space-between;
+                    }
+
+                    h2 {
+                        font-size: 16px;
+                        font-weight: bold;
+                        text-align: center;
+                        margin-bottom: 6px;
+                        justify-content: space-between;
+                    }
+
+                    p {
+                        margin-bottom: 8px;
+                    }
+
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        table-layout: fixed; /* QUAN TRỌNG: tự co chữ */
+                    }
+
+                th, td {
+                    border: 1px solid #000;
+                    padding: 8px 6px;          /* tạo khoảng cách trên – dưới */
+                    vertical-align: middle;   /* căn giữa theo chiều dọc */
+                    line-height: 1.4;         /* chữ không dính viền */
+                    word-wrap: break-word;
+                    word-break: break-word;
+                    white-space: normal;
+                }
+
+
+                    th {
+                        font-weight: bold;
+                        text-align: center;
+                        background-color: #f2f2f2;
+                    }
+
+                    td {
+                        text-align: left;
+                    }
+
+                    .text-center {
+                        text-align: center;
+                    }
+
+<!--                    .text-right {-->
+<!--                        text-align: right;-->
+<!--                    }-->
+
+                    /* Không cắt dòng khi sang trang */
+                    tr {
+                        page-break-inside: avoid;
+                    }
+
+                </style>
+
+                <main class="page">
+
+                    <h2>
+                        BẢNG KÊ CHI TIẾT HÀNG HOÁ BÁN RA
+                    </h2>
+
+                    <p>
+                        <strong>Ngày lập báo cáo:</strong>
+                        <t t-esc="time.strftime('%d/%m/%Y %H:%M:%S')"/>
+                    </p>
+
+                    <table class="table table-bordered">
+                        <tbody>
+
+                            <!-- HEADER -->
+                        <tr class="table-header-green;" style="background-color:green">
+                            <th style="width: 15%">Ngày</th>
+                            <th style="width: 15%">Đối tác</th>
+                            <th style="width: 10%">Mã hàng</th>
+                            <th style="width: 20%">Tên hàng</th>
+                            <th style="width: 8%">ĐVT</th>
+                            <th style="width: 12%">Đơn hàng</th>
+                            <th style="width: 10%">Chiết khấu</th>
+                            <th style="width: 10%">Ghi chú</th>
+                            <th style="width: 10%">Tổng</th>
+                        </tr>
+
+
+                            <!-- DATA -->
+                            <t t-foreach="docs" t-as="o">
+                                <t t-foreach="o.lines" t-as="line">
+                                    <tr>
+                                        <td><t t-esc="o.date_order"/></td>
+                                        <td><t t-esc="o.partner_id.name or ''"/></td>
+                                        <td><t t-esc="line.product_id.default_code or ''"/></td>
+                                        <td><t t-esc="line.product_id.name"/></td>
+                                        <td><t t-esc="line.product_uom_id.name"/></td>
+                                        <td><t t-esc="o.name"/></td>
+                                        <td class="text-right">
+                                            <t t-esc="line.discount"/>%
+                                        </td>
+                                        <td class="text-right">
+                                            <t t-esc="line.order_note"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <t t-esc="line.price_subtotal"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+
+                        </tbody>
+                    </table>
+
+                </main>
+            </t>
+
+        </t>
+    </template>
+</odoo>

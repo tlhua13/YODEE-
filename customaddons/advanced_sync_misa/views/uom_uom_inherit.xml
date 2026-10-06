@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+            <record id="advanced_sync_misa_product_uom_list_view" model="ir.ui.view">
+                <field name="name">advanced_sync_misa.product_uom_list_view</field>
+                <field name="model">uom.uom</field>
+                <field name="inherit_id" ref="uom.product_uom_tree_view"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='uom_type']" position="after">
+                        <field name="misa_id" optional="hide"/>
+                    </xpath>
+
+                </field>
+            </record>
+
+        <record id="advanced_sync_misa_uom_uom_view_search" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.uom_uom_view_search</field>
+            <field name="model">uom.uom</field>
+            <field name="inherit_id" ref="uom.uom_uom_view_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//separator[1]" position="before">
+                    <separator/>
+                    <filter string="Is Sync Misa" name="misa_id" domain="[('misa_id','!=', False)]"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="advanced_sync_misa_product_uom_form_action" model="ir.actions.act_window">
+            <field name="name">Units of Measure</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">uom.uom</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="advanced_sync_misa_product_uom"
+                  name="Units of Measure" sequence="80"
+                  parent="advanced_sync_misa.advanced_account_misa_dictionary_menu"
+                  action="advanced_sync_misa_product_uom_form_action"/>
+
+    </data>
+</odoo>

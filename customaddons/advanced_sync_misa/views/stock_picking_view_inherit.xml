@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="yodee_delivery_order_form_view_inherit" model="ir.ui.view">
+            <field name="name">yodee.delivery.order.form.inherit</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="model">stock.picking</field>
+            <field name="arch" type="xml">
+                <!-- Sync Misa Button -->
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="name_wholesaler"/>
+                    <field name="is_wholesaler"/>
+                    <field name="tracking_id"/>
+                </xpath>
+                <xpath expr="//field[@name='move_ids_without_package']/list/field[@name='product_id']" position="after">
+                    <field name="product_status" optional="show"/>
+                </xpath>
+                <xpath expr="//header/button[@name='action_cancel']" position="after">
+                    <button name="sync_misa_stock_picking"
+                            type="object"
+                            class="btn btn-primary"
+                            string="Sync Misa"
+                            invisible="state not in ['done'] or misa_status in ['synced']"/>
+                    <button name="manual_create_backorder"
+                            type="object"
+                            class="btn btn-primary"
+                            invisible="not done_do_can_create_backorder"
+                            string="Create back order"/>
+                </xpath>
+                <!-- Domain partner id -->
+                <xpath expr="//field[@name='partner_id'][1]" position="attributes">
+                    <attribute name="domain">[('misa_id', '!=', False)]</attribute>
+                     <attribute name="options">{'no_create': True, 'no_edit': True}</attribute>
+                </xpath>
+
+                <!-- Transporter field -->
+                <xpath expr="//field[@name='location_dest_id']" position="after">
+                    <field name="em_transporter"
+                           invisible="picking_type_code not in ['outgoing','internal']"
+                           readonly="state in ['done','cancel']"/>
+                </xpath>
+                <!--                <xpath expr="//field[@name='origin']" position="after">-->
+                <!--                    <field name="misa_status" groups="base.group_no_one"/>-->
+                <!--                </xpath>-->
+
+                <!-- Status Banner -->
+                <xpath expr="//h1[1]" position="after">
+
+                    <field name="misa_status" invisible="1"/>
+
+                    <!-- Unsynced -->
+                    <h2 style="color:#4d4d4d!important;text-align:left"
+                        invisible="not id or state in ['draft','sent'] or misa_status != 'not_synced'">
+                        Misa: Unsynchronized
+                        <field name="noti_status_misa"/>
+                    </h2>
+
+                    <!-- Synced -->
+                    <h2 style="color:green!important;text-align:left"
+                        invisible="not id or state in ['draft','sent'] or misa_status != 'synced'">
+                        Misa: Synchronized
+                        <field name="noti_status_misa"/>
+                    </h2>
+
+                    <!-- Sync Failed -->
+                    <h2 style="color:red!important;text-align:left"
+                        invisible="not id or state in ['draft','sent'] or misa_status != 'sync_failed'">
+                        Misa: Synchronization Failed
+                        <field name="noti_status_misa"/>
+                    </h2>
+                </xpath>
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="origin_misa" readonly="state in ['cancel', 'done']"/>
+                    <field name="return_id" invisible="not return_id"/>
+                </xpath>
+
+                <!-- Sync tab -->
+                <xpath expr="//page[last()]" position="after">
+                    <page string="Sync Misa" name="sync_misa" groups="base.group_no_one">
+
+                        <group>
+                            <group>
+                                <field name="misa_id"/>
+                                <field name="finish_sync_misa" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group>
+                                <field name="is_misa_pu_invoice" readonly="1"/>
+                                <field name="is_misa_stock_in" readonly="1"/>
+                                <field name="is_misa_stock_out" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="is_misa_stock_internal" readonly="1"/>
+                                <field name="is_misa_return" readonly="1"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="pancake_status"
+                           widget="badge"
+                           invisible="not pancake_status"
+                           width="150px"
+                           decoration-info="pancake_status in ['1','2','13','16',20]"
+                           decoration-success="pancake_status in ['3']"
+                           decoration-danger="pancake_status in ['4','5','6','7']"
+                           decoration-warning="pancake_status in ['9','11','12','15','17']"
+                           decoration-muted="pancake_status not in ['0','8','17']"
+                    />
+                </xpath>
+
+                <!-- Move lines -->
+                <xpath expr="//field[@name='move_ids_without_package']//list//field[@name='product_id']"
+                        position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_edit':True}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='move_ids_without_package']//list//field[@name='product_qty']"
+                       position="before">
+
+                    <field name="stock_misa_from"
+                            optional="show"
+                           column_invisible="parent.picking_type_code not in ['outgoing','internal']"/>
+
+                    <field name="stock_misa_to"
+                           optional="show"
+                           column_invisible="parent.picking_type_code not in ['incoming','internal']"/>
+
+                    <field name="misa_account_inventory" optional="hide"/>
+
+                    <field name="misa_account_receivable" optional="hide"/>
+
+                    <field name="misa_debit_account" optional="hide"/>
+
+                    <field name="misa_credit_account" optional="hide"/>
+                </xpath>
+                <xpath expr="//button[@name='action_see_returns']" position="attributes">
+                                <attribute name="invisible">state != 'done'</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="delivery_order_view_search_inherit_misa" model="ir.ui.view">
+            <field name="name">delivery.order.search.inherit.misa.status</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <filter name="misa_not_synced"
+                            string="Chưa đồng bộ MISA"
+                            domain="[('misa_status','=','not_synced')]"/>
+                    <filter name="misa_synced"
+                            string="Đã đồng bộ MISA"
+                            domain="[('misa_status','=','synced')]"/>
+                    <filter name="misa_sync_failed"
+                            string="Đông bộ không thành công Misa"
+                            domain="[('misa_status','=','sync_failed')]"/>
+                    <field name="origin_misa"/>
+                    <field name="tracking_id"/>
+                    <field name="name_wholesaler"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--        inherit stock picking  list view-->
+        <record id="stock_picking_list_view_search_inherit_misa" model="ir.ui.view">
+            <field name="name">stock.picking.list.view.inherit.misa</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="tracking_id" optional="show"/>
+                    <field name="origin_misa" optional="hiden" width="150px"/>
+                </xpath>
+
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="yodee_invoice_code" optional="show"/>
+                    <field name="yodee_invoice_date" optional="show"/>
+                    <field name="total_quantity"/>
+                    <field name="misa_status"
+                           widget="badge"
+                           width="100px"
+                           decoration-success="misa_status == 'synced'"
+                           decoration-danger="misa_status == 'sync_failed'"
+                           decoration-muted="misa_status == 'not_synced'"
+                    />
+                    <field name="pancake_status"
+                           widget="badge"
+                           width="150px"
+                           decoration-info="pancake_status in ['1','2','13','16',20]"
+                           decoration-success="pancake_status in ['3']"
+                           decoration-danger="pancake_status in ['4','5','6','7']"
+                           decoration-warning="pancake_status in ['9','11','12','15','17']"
+                           decoration-muted="pancake_status not in ['0','8','17']"
+                    />
+                </xpath>
+                <xpath expr="//list//field[@name='total_quantity']"
+                        position="attributes">
+                    <attribute name="sum">total_quantity</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_done']" position="attributes">
+                    <attribute name="optional">show</attribute>
+                </xpath>
+                <xpath expr="//field[@name='scheduled_date']" position="replace">
+                    <field name="scheduled_date" optional="show" readonly="state in ['cancel', 'done']"/>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="attributes">
+                    <attribute name="width">80px</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="advanced_sync_misa_view_search_inherit_pancake" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.search.inherit.pancake</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <field name="pancake_status"/>
+                    <filter string="Trạng thái Pancake" name="pancake_status_group" domain="[]" context="{'group_by': 'pancake_status'}"/>
+                </xpath>
+                <xpath expr="//filter[@name='available']" position="after">
+                     <separator/>
+                    <filter name="pancake_status_filter" string="Pancake Cancel" domain="[('pancake_status', 'in', ['4','5','6','7'])]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Mass action -->
+<!--        <record id="action_delivery_order_misa_sync" model="ir.actions.server">-->
+<!--            <field name="name">MISA synchronization</field>-->
+<!--            <field name="model_id" ref="stock.model_stock_picking"/>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="binding_model_id" ref="stock.model_stock_picking"/>-->
+<!--            <field name="binding_view_types">list</field>-->
+<!--            <field name="code">action = records.sync_misa_stock_picking_list()</field>-->
+
+<!--        </record>-->
+
+        <record id="action_delivery_order_misa_sync_new" model="ir.actions.server">
+            <field name="name">Cập nhật chứng từ lên MISA</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="binding_model_id" ref="stock.model_stock_picking"/>
+            <field name="binding_view_types">form,list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.sync_misa_stock_picking()</field>
+        </record>
+    </data>
+</odoo>

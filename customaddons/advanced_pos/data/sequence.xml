@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="seq_invoice_pos" model="ir.sequence">
+            <field name="name">Invoice Yodee</field>
+            <field name="code">invoice.pos.yodee</field>
+
+            <field name="prefix">HD%(y)s%(month)s%(day)s-</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+
+            <field name="use_date_range">True</field>
+        </record>
+    </data>
+</odoo>

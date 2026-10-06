@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-inherit="point_of_sale.Orderline" t-inherit-mode="extension">
+        <xpath expr="//li[contains(@t-if, 'line.discount')]" position="replace">
+            <li t-if="line.price !== 0 and line.discount and line.discount !== '0' and !props.basic_receipt">
+                <t t-if="line.direct_discount_amount">
+                    <t t-esc="line.total_before_discount"/> giảm giá <em><t t-esc="line.direct_discount_amount"/></em>
+                </t>
+                <t t-else="">
+                    <t t-esc="line.price_without_discount"/> With a <em><t t-esc="line.discount" />% </em> discount
+                </t>
+            </li>
+        </xpath>
+    </t>
+</templates>

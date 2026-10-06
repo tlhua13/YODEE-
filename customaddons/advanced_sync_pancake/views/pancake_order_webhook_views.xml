@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="pancake_order_webhook_list_view" model="ir.ui.view">
+            <field name="name">pancake.order.webhook.list</field>
+            <field name="model">pancake.order.webhook</field>
+            <field name="arch" type="xml">
+                <list string="Pancake Order Webhook" default_order="create_date desc" create="0"
+                      decoration-danger="state in ('error', 'invalid_token')" decoration-success="state == 'done'"
+                      decoration-muted="state in ('skipped', 'order_deleted')" decoration-info="state == 'pending'">
+                    <field name="pancake_order_id"/>
+                    <field name="pancake_status_label"/>
+                    <field name="create_date"/>
+                    <field name="processed_date"/>
+                    <field name="state" widget="badge"/>
+                    <field name="error_message" optional="hide"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="pancake_order_webhook_form_view" model="ir.ui.view">
+            <field name="name">pancake.order.webhook.form</field>
+            <field name="model">pancake.order.webhook</field>
+            <field name="arch" type="xml">
+                <form create="0">
+                    <header>
+                        <button name="action_set_to_pending" type="object" string="Retry"
+                                class="oe_highlight" invisible="state not in ('error', 'skipped', 'invalid_token')"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="pancake_order_id"/>
+                                <field name="pancake_status_label"/>
+                                <field name="state"/>
+                            </group>
+                            <group>
+                                <field name="create_date"/>
+                                <field name="processed_date"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="error_message"/>
+                        </group>
+                        <group>
+                            <field name="raw_data"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pancake_order_webhook_search_view" model="ir.ui.view">
+            <field name="name">pancake.order.webhook.search</field>
+            <field name="model">pancake.order.webhook</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="pancake_order_id"/>
+                    <filter string="Pending" name="pending" domain="[('state', '=', 'pending')]"/>
+                    <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
+                    <filter string="Error" name="error" domain="[('state', '=', 'error')]"/>
+                    <filter string="Skipped" name="skipped" domain="[('state', '=', 'skipped')]"/>
+                    <filter string="Order Deleted" name="order_deleted" domain="[('state', '=', 'order_deleted')]"/>
+                    <filter string="Invalid Token" name="invalid_token" domain="[('state', '=', 'invalid_token')]"/>
+                    <separator/>
+                    <group>
+                        <filter string="Status" name="group_by_state" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="pancake_order_webhook_action" model="ir.actions.act_window">
+            <field name="name">Pancake Order Webhook</field>
+            <field name="res_model">pancake.order.webhook</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="pancake_order_webhook_search_view"/>
+        </record>
+
+        <menuitem parent="advanced_sync_pancake.api_log_menu" id="pancake_order_webhook_menu"
+                  name="Pancake Order Webhook" action="pancake_order_webhook_action" sequence="50"/>
+    </data>
+</odoo>

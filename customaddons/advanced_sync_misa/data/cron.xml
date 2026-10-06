@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="cron_fetch_misa_data" model="ir.cron">
+            <field name="name">#1. Misa: Cron fetch Misa data</field>
+            <field name="model_id" ref="advanced_sync_misa.model_popup_sync_dictionary"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_fetch_misa_data()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="active" eval="False"/>
+            <field name="interval_number">30</field>
+            <field name="interval_type">minutes</field>
+            <field name="priority" eval="6"/>
+        </record>
+
+        <record id="cron_delete_old_ir_logging" model="ir.cron">
+            <field name="name">#Delete Old ir.logging</field>
+            <field name="model_id" ref="base.model_ir_logging"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_delete_exception_logs()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active">True</field>
+        </record>
+
+    </data>
+</odoo>

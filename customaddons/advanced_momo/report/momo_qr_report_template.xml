@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_momo_qr">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <style>
+                            .momo-qr-page {
+                                text-align: center;
+                                font-family: Arial, sans-serif;
+                                padding: 10px 0;
+                            }
+                            .momo-brand {
+                                color: #a50064;
+                                font-size: 22px;
+                                font-weight: bold;
+                                margin-bottom: 4px;
+                            }
+                            .momo-subtitle {
+                                color: #555;
+                                font-size: 11px;
+                                margin-bottom: 12px;
+                            }
+                            .momo-qr-box {
+                                display: inline-block;
+                                border: 3px solid #a50064;
+                                border-radius: 12px;
+                                padding: 10px;
+                                background: #fff;
+                                margin-bottom: 12px;
+                            }
+                            .momo-qr-box img {
+                                width: 180px;
+                                height: 180px;
+                            }
+                            .momo-amount {
+                                color: #a50064;
+                                font-size: 20px;
+                                font-weight: bold;
+                                margin-bottom: 6px;
+                            }
+                            .momo-info {
+                                color: #333;
+                                font-size: 11px;
+                                margin-bottom: 3px;
+                            }
+                            .momo-instruction {
+                                color: #888;
+                                font-size: 10px;
+                                margin-top: 10px;
+                                font-style: italic;
+                            }
+                        </style>
+
+                        <div class="momo-qr-page">
+                            <div class="momo-brand">Thanh toán MoMo</div>
+                            <div class="momo-subtitle">Quét mã QR bằng ứng dụng MoMo để thanh toán</div>
+
+                            <div class="momo-qr-box">
+                                <img t-if="doc.qr_code_image"
+                                     t-att-src="'data:image/png;base64,' + doc.qr_code_image.decode('utf-8') if isinstance(doc.qr_code_image, bytes) else 'data:image/png;base64,' + doc.qr_code_image"
+                                     alt="MoMo QR Code"/>
+                                <div t-if="not doc.qr_code_image and doc.qr_code_url">
+                                    <span style="color: #999; font-size: 12px;">QR code not available for print</span>
+                                </div>
+                            </div>
+
+                            <div class="momo-amount">
+                                <t t-esc="'{:,.0f}'.format(doc.amount)"/> VND
+                            </div>
+
+                            <div class="momo-info">
+                                <strong>Đơn hàng:</strong> <t t-esc="doc.name"/>
+                            </div>
+<!--                            <div t-if="doc.order_info" class="momo-info">-->
+<!--                                <t t-esc="doc.order_info"/>-->
+<!--                            </div>-->
+
+                            <div class="momo-instruction">
+                                Mở ứng dụng MoMo &gt; Quét mã QR &gt; Xác nhận thanh toán
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

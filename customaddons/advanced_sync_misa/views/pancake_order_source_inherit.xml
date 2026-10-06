@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="advanced_sync_misa_view_pancake_order_source_view_inherit_list" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.view_pancake_order_source_view_inherit_form</field>
+            <field name="model">pancake.order.source</field>
+            <field name="inherit_id" ref="advanced_sync_pancake.view_pancake_order_source_list"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="misa_debit_account"/>
+                    <field name="misa_credit_account"/>
+                </xpath>
+            </field>
+        </record>
+        <!-- Inherit Form View to Modify it -->
+        <record id="advanced_sync_misa_view_pancake_order_source_form" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.view_pancake_order_source_form</field>
+            <field name="model">pancake.order.source</field>
+            <field name="inherit_id" ref="advanced_sync_pancake.view_pancake_order_source_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//group[@name='group_basic_info']" position="inside">
+                    <group>
+                        <field name="misa_debit_account"/>
+                        <field name="misa_credit_account"/>
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="advanced_sync_misa_picking_type_inherit" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.stock_picking_type_inherit</field>
+            <field name="model">stock.picking.type</field>
+            <field name="inherit_id" ref="stock.view_picking_type_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sequence_code']" position="after">
+                    <field name="is_return"/>
+                    <field name="location_address_id"/>
+                    <field name="misa_debit_account" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="misa_credit_account" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="misa_stock_account" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="misa_cost_account" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="is_misa_return"/>
+                    <field name="default_customer"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="advanced_sync_misa_view_picking_type_tree" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.view_picking_type_tree</field>
+            <field name="model">stock.picking.type</field>
+            <field name="inherit_id" ref="stock.view_picking_type_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="misa_debit_account"/>
+                    <field name="misa_credit_account"/>
+                    <field name="default_customer"/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="advanced_sync_misa_view_location_form" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.view_location_form</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='additional_info']" position="after">
+                    <group name="not_submit" string="Không lưu tồn kho">
+                        <field name="is_not_submit"/>
+                    </group>
+                </xpath>
+                <xpath expr="//group[@name='additional_info']" position="after">
+                    <group name="location_misa" string="Misa Sync">
+                        <field name="location_misa_id"/>
+                    </group>
+                </xpath>
+
+<!--                <xpath expr="//h2[1]" position="after">-->
+<!--                    <label for="location_misa_id"/>-->
+<!--                    <h3>-->
+<!--                        <field name="location_misa_id" placeholder="e.g.Sync Misa Locations" options="{'no_create': True}"/>-->
+<!--                    </h3>-->
+<!--                    <h4>-->
+<!--                        <field name="stock_misa_code" invisible="1"/>-->
+<!--                    </h4>-->
+<!--                </xpath>-->
+            </field>
+        </record>
+        <record id="advanced_sync_misa_view_location_tree2" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.view_location_tree2</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_tree2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='usage']" position="after">
+                    <field name="location_misa_id" optional="show"/>
+                    <field name="stock_misa_code" optional="hiden"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

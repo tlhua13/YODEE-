@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="receipt_header_inherit" xml:space="preserve">
+    <t t-inherit="point_of_sale.ReceiptHeader"
+       t-inherit-mode="extension">
+
+        <!--   Ẩn thông tin không sử dụng     -->
+
+        <xpath expr="//t[@t-if='props.data.company.phone']"
+               position="replace">
+            <!-- removed -->
+        </xpath>
+        <xpath expr="//div[@t-if='props.data.cashier']"
+               position="replace">
+            <!-- removed -->
+        </xpath>
+        <xpath expr="//div[@t-esc='props.data.company.website']"
+               position="replace">
+            <div t-if="props.data.company.website"/>
+        </xpath>
+
+        <xpath expr="//div[@t-if='props.data.header']"
+               position="before">
+            <div t-if="props.data.company.street" t-esc="props.data.company.street"/>
+            <div t-if="props.data.company.city">
+                <span>TP.</span>
+                <span t-esc="props.data.company.city"/>
+            </div>
+            <div t-if="props.data.company.hotline">
+                <span>Hotline:</span>
+                <span class="ms-1" t-esc="props.data.company.hotline"/>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@t-if='props.data.trackingNumber and !props.data.bigTrackingNumber']"
+               position="replace">
+        </xpath>
+
+    </t>
+    <t t-inherit="point_of_sale.ReceiptHeader" t-inherit-mode="extension">
+        <xpath expr="//t[@t-name='point_of_sale.ReceiptHeader']" position="inside">
+            <style>
+                    .pos-receipt-contact {
+                        font-size: 100% !important;
+                    }
+
+            </style>
+        </xpath>
+    </t>
+</templates>

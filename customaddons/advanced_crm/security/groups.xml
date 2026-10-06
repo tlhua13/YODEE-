@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data noupdate="0">
+
+<!--        Rule leader chỉ xem được team của họ-->
+        <record id="crm_lead_team_access_rule_leader" model="ir.rule">
+            <field name="name">Lead: Team Leader Only Their Team</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+            <field name="domain_force">
+                [('team_id.user_id', '=', user.id)]
+            </field>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+        </record>
+<!--        Sale admin chỉ được nhìn-->
+        <record id="crm_lead_team_access_rule_admin_sale" model="ir.rule">
+            <field name="name">Lead: Admin sale </field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+            <field name="domain_force">
+                [
+                    ('team_id.sale_admin_id', '=', user.id)
+                ]
+            </field>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="0"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+
+        <record id="saleman_crm_team_access_rule" model="ir.rule">
+            <field name="name">Sale: Sale Team Member Access</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="domain_force">
+                ['|',
+                    ('team_id.member_ids', 'in', [user.id]),
+                    ('team_id.user_id', '=', user.id)
+                ]
+            </field>
+            <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+        </record>
+
+        <record id="product_pricelist_team_rule" model="ir.rule">
+            <field name="name">Pricelist by Sales Team</field>
+            <field name="model_id" ref="product.model_product_pricelist"/>
+            <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+                <field name="domain_force">
+                    [
+                        '&amp;',
+                        ('sale_team_ids', '!=', False),
+                        ('sale_team_ids', 'in', user.sale_team_id.id),
+                    ]
+                </field>
+        </record>
+
+<!--        Leader và Admin thì được xem toàn bộ bảng giá-->
+        <record id="product_pricelist_team_rule_manager" model="ir.rule">
+            <field name="name">Pricelist - Manager Full Access</field>
+            <field name="model_id" ref="product.model_product_pricelist"/>
+            <field name="groups" eval="[(4, ref('sales_team.group_sale_manager'))]"/>
+            <field name="domain_force">
+                [(1,'=',1)]
+            </field>
+        </record>
+<!--Leader có thể xem SO line của các thành viên-->
+        <record id="sale_order_line_team_leader_rule" model="ir.rule">
+            <field name="name">Sale Order Line - Team Leader</field>
+            <field name="model_id" ref="sale.model_sale_order_line"/>
+            <field name="domain_force">
+                ['|',
+                    ('order_id.team_id.member_ids', 'in', [user.id]),
+                    ('order_id.team_id.user_id', '=', user.id)
+                ]
+            </field>
+            <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+        </record>
+
+<!--chỉ xem được các khách hàng thuộc khu vực mà sale team quản lý -->
+<record id="res_partner_area_rule" model="ir.rule">
+    <field name="name">Partner by Sale Area</field>
+    <field name="model_id" ref="base.model_res_partner"/>
+    <field name="domain_force">
+        ['|',
+            ('sale_area_id', 'in', user.sale_team_id.sale_area_id.ids),
+            ('id', '=', user.partner_id.id)
+        ]
+    </field>
+    <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+</record>
+
+        <record id="res_partner_area_rule_manager" model="ir.rule">
+            <field name="name">Partner by sale area - Manager Full Access</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="groups" eval="[(4, ref('sales_team.group_sale_manager'))]"/>
+            <field name="domain_force">
+                [(1,'=',1)]
+            </field>
+        </record>
+    </data>
+</odoo>

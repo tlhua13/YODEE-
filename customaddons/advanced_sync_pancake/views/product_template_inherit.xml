@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="advanced_sync_pancake_product_template_form_view" model="ir.ui.view">
+            <field name="name">advanced_sync_pancake.product_template_form_view</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="pancake_product_template_id"/>
+                </xpath>
+                <xpath expr="//header" position="inside">
+                    <button name="action_change_uom" class="oe_highlight" type="object" string="Cập nhật đơn vị tính" groups="base.group_no_one"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="advanced_sync_pancake_product_template_only_form_view_inherit" model="ir.ui.view">
+            <field name="name">advanced_sync_pancake.product_template_only_form_view_inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='barcode']" position="replace">
+                    <field name="pancake_barcode" string="Barcode from Pancake"/>
+                    <field name="pancake_brand_ids" string="Brands" widget="many2many_tags"/>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Đồng bộ Pancake" groups="base.group_no_one">
+                        <group>
+                            <field name="pancake_product_id" readonly="1"/>
+                            <field name="pancake_order_json" readonly="1"/>
+                        </group>
+
+                        <field name="pancake_order_json_text"/>
+                    </page>
+                </xpath>
+                <xpath expr="//group[@name='internal_notes']" position="before">
+                    <group>
+                        <field name="combo_product" readonly="1" invisible="not combo_product">
+                            <list>
+                                <field name="default_code"/>
+                                <field name="name"/>
+                                <field name="pancake_brand_ids" widget="many2many_tags"/>
+                            </list>
+                        </field>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_template_search_view_pancake" model="ir.ui.view">
+            <field name="name">product.template.search.pancake</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='combo']" position="after">
+                    <separator/>
+                    <filter string="Is Sync Pancake" name="pancake_product_id_filter"
+                            domain="[('pancake_product_id','!=', False)]"/>
+                    <filter string="Is Combo Pancake" name="combo_product_filter"
+                            domain="[('combo_product','!=', False)]"/>
+
+                    <group expand="1" string="Tên Sản phẩm mẫu">
+                        <filter string="Tên Sản phẩm mẫu"
+                                name="group_pancake_template"
+                                context="{'group_by': 'pancake_product_template_id'}"/>
+                    </group>
+                </xpath>
+                <xpath expr="//search" position="inside">
+
+                    <field name="pancake_barcode" string="Pancake Barcode"/>
+
+                    <filter name="pancake_barcode_filter"
+                            string="Pancake Barcode"
+                            domain="[('pancake_barcode', '!=', False)]"/>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

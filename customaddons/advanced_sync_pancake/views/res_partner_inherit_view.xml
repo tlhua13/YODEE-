@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="advanced_sync_pancake_res_partner_form_view" model="ir.ui.view">
+            <field name="name">advanced_sync_pancake.res_partner_form_view</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="sale_area_id"/>
+                </xpath>
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="pancake_full_address" readonly="1" invisible="1"/>
+                    <field name="pancake_gender" readonly="1" invisible="not pancake_id or not pancake_gender"/>
+                    <field name="pancake_category_id" readonly="1"
+                           invisible="not pancake_id or not pancake_category_id"/>
+                    <field name="pancake_country_ward_code" readonly="1"
+                           invisible="not pancake_id or not pancake_country_ward_code"/>
+                    <field name="pancake_country_code" readonly="1"
+                           invisible="not pancake_id or not pancake_country_code"/>
+                    <field name="pancake_country_state_code" readonly="1"
+                           invisible="not pancake_id or not pancake_country_state_code"/>
+                </xpath>
+<!--                <xpath expr="//div[@name='div_address']" position="attributes">-->
+<!--                    <attribute name="invisible">pancake_id</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//div[@class='o_address_format']" position="attributes">-->
+<!--                    <attribute name="invisible">pancake_id</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//span[@name='address_name']" position="attributes">-->
+<!--                    <attribute name="invisible">pancake_id</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//notebook" position="inside">
+                    <page string="Đồng bộ Pancake" groups="base.group_system">
+                        <group>
+                            <button name="pancake_sync_customer"
+                                    type="object" class="oe_highlight"
+                                    string="Sync Pancake Customer"/>
+                            <field name="pancake_assigned_user_id" invisible="1"/>
+                            <field name="pancake_id" readonly="1"/>
+                            <field name="pancake_address_id" readonly="1"/>
+                            <field name="is_sync_pancake" invisible="1"/>
+                            <field name="pancake_order_json" invisible="1"/>
+                        </group>
+                        <field name="pancake_order_json_text" widget="text" readonly="1"/>
+                    </page>
+                </xpath>
+
+                <xpath expr="//page[@name='contact_addresses']//field[@name='child_ids']/form//field[@name='name']"
+                       position="after">
+                    <field name="pancake_full_address" invisible="type != 'delivery'"/>
+                </xpath>
+
+            </field>
+        </record>
+        <record id="advanced_sync_pancake_view_res_partner_filter" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.view_res_partner_filter</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='type_company']" position="after">
+                    <separator/>
+                    <filter string="Đã đồng bộ với Pancake" name="is_sync_pancake_done" domain="[('pancake_id','!=', False)]"/>
+                    <filter string="Chưa đồng bộ với Pancake" name="is_sync_pancake_miss" domain="[('pancake_id','=', False)]"/>
+                </xpath>
+                <xpath expr="//group[1]" position="inside">
+                    <filter string="Đồng bộ Pancake" name="group_is_sync_pancake"
+                            context="{'group_by':'is_sync_pancake'}"/>
+                    <filter string="Khu vực bán hàng" name="group_sale_area_id"
+                            context="{'group_by':'sale_area_id'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="advanced_sync_pancake_view_partner_tree" model="ir.ui.view">
+            <field name="name">advanced_sync_pancake.view_partner_tree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='phone']" position="before">
+                    <field name="is_sync_pancake"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="model_res_partner_mass_action_pancake_sync_customer" model="ir.actions.server">
+            <field name="name">Sync Pancake Customer</field>
+            <field name="model_id" ref="advanced_sync_pancake.model_res_partner"/>
+            <field name="binding_model_id" ref="advanced_sync_pancake.model_res_partner"/>
+            <field name="binding_view_types">form,list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.pancake_sync_customer()</field>
+        </record>
+
+
+    </data>
+</odoo>

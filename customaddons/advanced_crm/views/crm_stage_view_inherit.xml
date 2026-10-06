@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_crm_stage_form_inherit" model="ir.ui.view">
+            <field name="name">crm.stage.form.inherit.condition</field>
+            <field name="model">crm.stage</field>
+            <field name="inherit_id" ref="crm.crm_stage_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group/group/field[@name='team_id']" position="after">
+                    <group string="Condition Configuration">
+                        <field name="enable_condition"/>
+                        <field name="require_email" invisible="not enable_condition"/>
+                        <field name="require_phone" invisible="not enable_condition"/>
+                        <field name="require_address" invisible="not enable_condition"/>
+                        <field name="require_quotation" invisible="not enable_condition"/>
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <record id="advanced_crm_crm_stage_tree" model="ir.ui.view">
+            <field name="name">advanced_crm.crm_stage_tree</field>
+            <field name="model">crm.stage</field>
+            <field name="inherit_id" ref="crm.crm_stage_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='team_id']" position="after">
+                    <field name="require_email" invisible="not enable_condition"/>
+                    <field name="require_phone" invisible="not enable_condition"/>
+                    <field name="require_address" invisible="not enable_condition"/>
+                    <field name="require_quotation" invisible="not enable_condition"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

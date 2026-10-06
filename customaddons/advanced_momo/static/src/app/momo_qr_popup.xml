@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="advanced_momo.MomoQRPopup" t-inherit="web.ConfirmationDialog" t-inherit-mode="primary">
+        <xpath expr="//p" position="replace">
+            <div class="d-flex flex-column align-items-center justify-content-center">
+                <!-- Waiting State: Show QR -->
+                <div t-if="pollingState.status === 'waiting'" class="text-center">
+                    <p class="mb-2" style="font-size: 16px; font-weight: bold;">
+                        Scan QR code with MoMo app
+                    </p>
+                    <div class="d-flex justify-content-center mb-3">
+                        <div style="border: 3px solid #a50064; border-radius: 12px; padding: 12px; background: white;">
+                            <img t-att-src="props.qrCodeUrl" alt="MoMo QR Code"
+                                 style="width: 220px; height: 220px;"/>
+                        </div>
+                    </div>
+                    <div class="mb-2" style="font-size: 20px; font-weight: bold; color: #a50064;">
+                        <t t-esc="amount"/>
+                    </div>
+                    <div class="text-muted mb-2">
+                        <i class="fa fa-spinner fa-spin me-1"/>
+                        <t t-esc="pollingState.message"/>
+                    </div>
+                    <div class="text-muted" style="font-size: 13px;">
+                        Time remaining: <strong t-esc="formattedCountdown"/>
+                    </div>
+                </div>
+
+                <!-- Success State -->
+                <div t-if="pollingState.status === 'success'" class="text-center py-4">
+                    <i class="fa fa-check-circle text-success" style="font-size: 64px;"/>
+                    <h4 class="mt-3 text-success">Payment Successful!</h4>
+                    <div class="mb-2" style="font-size: 20px; font-weight: bold; color: #a50064;">
+                        <t t-esc="amount"/>
+                    </div>
+                </div>
+
+                <!-- Failed State -->
+                <div t-if="pollingState.status === 'failed'" class="text-center py-4">
+                    <i class="fa fa-times-circle text-danger" style="font-size: 64px;"/>
+                    <h4 class="mt-3 text-danger">Payment Failed</h4>
+                    <p class="text-muted">
+                        <t t-esc="pollingState.message"/>
+                    </p>
+                </div>
+
+                <!-- Timeout State -->
+                <div t-if="pollingState.status === 'timeout'" class="text-center py-4">
+                    <i class="fa fa-clock-o text-warning" style="font-size: 64px;"/>
+                    <h4 class="mt-3 text-warning">Payment Timed Out</h4>
+                    <p class="text-muted">
+                        <t t-esc="pollingState.message"/>
+                    </p>
+                </div>
+            </div>
+        </xpath>
+        <!-- Style the Confirm button -->
+        <xpath expr="//button[@t-on-click='_confirm']" position="attributes">
+            <attribute name="class" add="btn-success" remove="btn-primary" separator=" " />
+        </xpath>
+        <!-- Style the Cancel button -->
+        <xpath expr="//button[@t-on-click='_cancel']" position="attributes">
+            <attribute name="class" add="btn-danger" remove="btn-secondary" separator=" " />
+        </xpath>
+    </t>
+
+</templates>

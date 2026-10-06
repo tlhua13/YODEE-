@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="stock_picking_list_view_search_inherit_pancake" model="ir.ui.view">
+            <field name="name">stock.picking.list.view.inherit.pancake</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="pancake_order_id" optional="hiden" width="150px"/>
+                    <field name="return_ids" widget="many2many_tags" width="120px"/>
+                    <field name="date_pancake" optional="hiden" />
+                    <field name="date_updated_pancake" optional="hiden"/>
+                </xpath>
+                <xpath expr="//field[@name='origin']" position="attributes">
+                    <attribute name="width">150px</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="yodee_delivery_order_form_view_inherit" model="ir.ui.view">
+            <field name="name">yodee.delivery.order.form.inherit</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="model">stock.picking</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='move_ids_without_package']//list//field[@name='product_uom_qty']"
+                        position="attributes">
+                    <attribute name="sum">product_uom_qty</attribute>
+                </xpath>
+                <xpath expr="//field[@name='picking_type_id'][1]" position="before">
+                    <field name="address_partner_detail"/>
+                </xpath>
+                <xpath expr="//field[@name='move_ids_without_package']//list//field[@name='quantity']"
+                        position="attributes">
+                    <attribute name="sum">quantity</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_validate'][1]"  position="attributes">
+                    <attribute name="confirm">Vui lòng kiểm tra kỹ vị trí nguồn và vị trí đích trước khi xác nhận phiếu kho để tránh sai sót dữ liệu!</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_validate'][2]"  position="attributes">
+                    <attribute name="confirm">Vui lòng kiểm tra kỹ vị trí nguồn và vị trí đích trước khi xác nhận phiếu kho để tránh sai sót dữ liệu!</attribute>
+                </xpath>
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="date_pancake" invisible="not date_pancake"/>
+                    <field name="date_updated_pancake" invisible="not date_updated_pancake"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="delivery_order_view_search_inherit_pancake" model="ir.ui.view">
+            <field name="name">delivery.order.search.inherit.pancake</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <field name="pancake_order_id"/>
+                    <separator/>
+                    <field name="return_ids"/>
+                </xpath>
+                <xpath expr="//filter[@name='available']" position="after">
+                    <filter name="done" string="Done" domain="[('state', '=', 'done')]"/>
+                    <filter name="return_ids_filter" string="Return Orders" domain="[('return_ids', '!=', False)]"/>
+                </xpath>
+                <xpath expr="//group[1]" position="inside">
+                      <filter string="Ngày tạo Pancake" name="date_pancake_group" domain="[]" context="{'group_by': 'date_pancake'}"/>
+                     <filter string="Cập nhật lần cuối Pancake" name="date_updated_pancake_group" domain="[]" context="{'group_by': 'date_updated_pancake'}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

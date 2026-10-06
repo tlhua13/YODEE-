@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_misa" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.advanced_sync_misa</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="10"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+
+                <app string="MISA Sync" data-string="MISA Sync" name="advanced_sync_misa" groups="base.group_system">
+
+                    <!-- API Configuration -->
+                    <block title="API Configuration" name="misa_api_configuration">
+                        <setting id="misa_api_url" help="Enter the API URL for MISA service">
+                            <label for="api_url" string="MISA API URL"/>
+                            <field name="api_url" placeholder="e.g. https://api.misa.com" class="text-center"/>
+                            <div class="text-muted">
+                                URL kết nối đến MISA API
+                            </div>
+                        </setting>
+
+                        <setting id="misa_app_id" help="Your MISA Application ID">
+                            <label for="app_id" string="App ID"/>
+                            <field name="app_id" placeholder="e.g. ..." class="text-center"/>
+                        </setting>
+
+                        <setting id="misa_access_code" help="Your MISA Access Code">
+                            <label for="access_code" string="Access Code"/>
+                            <field name="access_code" placeholder="e.g. ..." password="True" class="text-center"/>
+                        </setting>
+
+                        <setting id="misa_org_code" help="Your Company Org Code in MISA">
+                            <label for="org_company_code" string="Org Company Code"/>
+                            <field name="org_company_code" placeholder="e.g. COMPANY123" class="text-center"/>
+                        </setting>
+
+                        <setting id="misa_branch_id" help="Your Branch ID in MISA">
+                            <label for="branch_id" string="Branch ID"/>
+                            <field name="branch_id" placeholder="e.g. Branch123" class="text-center"/>
+                        </setting>
+                    </block>
+
+                    <!-- Sync Params -->
+                    <block title="Sync Parameters" name="misa_sync_parameters">
+                        <setting id="misa_limit_time">
+                            <label for="limit_time" string="Sync Time Limit"/>
+                            <field name="limit_time" placeholder="Seconds, e.g. 300" class="text-center"/>
+                            <div class="text-muted">Thời gian giới hạn mỗi lần đồng bộ</div>
+                        </setting>
+
+                        <setting id="misa_limit_fetch">
+                            <label for="limit_fetch" string="Max Records / Sync"/>
+                            <field name="limit_fetch" placeholder="e.g. 100" class="text-center"/>
+                            <div class="text-muted">Số bản ghi tối đa mỗi lần đồng bộ</div>
+                        </setting>
+
+                        <setting id="misa_discount_account">
+                            <label for="misa_discount_account" string="Tài khoản chiết khấu"/>
+                            <field name="misa_discount_account" placeholder="5211" class="text-center"/>
+                        </setting>
+                    </block>
+
+                    <!-- Connection Test -->
+                    <block title="Connection Test" name="misa_connection_test">
+                        <setting id="misa_test_connection" help="Test your connection to MISA API">
+                            <div class="o_form_label">Kiểm tra kết nối MISA</div>
+                            <div class="text-muted">Xác thực thông tin kết nối và lấy dữ liệu công ty</div>
+
+                            <div class="mt8">
+                                <button name="sync_misa_company_info"
+                                        type="object"
+                                        icon="oi-check"
+                                        string="Check Connection"
+                                        class="btn-link"/>
+                            </div>
+                        </setting>
+                    </block>
+
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Action for Settings -->
+    <record id="action_misa_config_settings" model="ir.actions.act_window">
+        <field name="name">MISA Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_id" ref="res_config_settings_view_form_misa"/>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module': 'advanced_sync_misa', 'bin_size': False}</field>
+    </record>
+
+</odoo>

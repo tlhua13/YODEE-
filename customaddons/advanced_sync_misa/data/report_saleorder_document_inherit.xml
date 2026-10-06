@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <template id="report_saleorder_document_inherit"
+              inherit_id="sale.report_saleorder_document">
+<!--        Chèn font chữ Arial-->
+        <xpath expr="//t[@t-call='web.external_layout']" position="inside">
+            <style>
+                body,
+                table,
+                td,
+                th,
+                span,
+                div,
+                p {
+                    font-family: Arial, Helvetica, sans-serif !important;
+                }
+            </style>
+        </xpath>
+        <xpath expr="//t[@t-set='address']" position="replace">
+            <t t-set="address">
+                 <!--<div t-field="doc.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}"/>-->
+                    <p t-if="doc.partner_id.vat">
+                        <t t-if="doc.company_id.account_fiscal_country_id.vat_label" t-out="doc.company_id.account_fiscal_country_id.vat_label"/>
+                        <!--<t t-else="">Tax ID</t>: <span t-field="doc.partner_id.vat"/>-->
+                    </p>
+            </t>
+        </xpath>
+
+        <xpath expr="//t[t[@t-set='information_block']]" position="replace">
+            <t t-set="information_block">
+                        <strong>
+                            <t t-if="env.lang == 'vi_VN'">
+                                <t t-if="doc.partner_shipping_id == doc.partner_invoice_id">
+                                    Địa chỉ xuất hóa đơn và giao hàng
+                                </t>
+                                <t t-else="">
+                                    Địa chỉ xuất hóa đơn
+                                </t>
+                            </t>
+                            <t t-else="">
+                                <t t-if="doc.partner_shipping_id == doc.partner_invoice_id">
+                                    Invoicing and Shipping Address
+                                </t>
+                                <t t-else="">
+                                    Invoicing Address
+                                </t>
+                            </t>
+                        </strong>
+                        <div t-if="doc.partner_invoice_id.name">
+                            <b t-field="doc.partner_invoice_id.name"/>
+                        </div>
+                        <div t-field="doc.partner_invoice_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True}"/>
+                        <div t-if="doc.partner_invoice_id.vat">
+                            <strong>Mã số thuế:</strong>
+                            <span t-field="doc.partner_invoice_id.vat"/>
+                        </div>
+                        <div t-if="doc.partner_invoice_id.email">
+                            <i class="fa fa-envelope-o" style="margin-right: 5px;"/>
+                            <span t-field="doc.partner_invoice_id.email"/>
+                        </div>
+                        <!--<t t-if="doc.partner_shipping_id != doc.partner_invoice_id">-->
+                            <strong class="d-block mt-3">
+                                <t t-if="env.lang == 'vi_VN'">Địa chỉ giao hàng</t>
+                                <t t-else="">Shipping Address</t>
+                            </strong>
+                            <div t-if="doc.partner_shipping_id.name">
+                                <b t-field="doc.partner_shipping_id.name"/>
+                            </div>
+                            <t t-if="doc.address_partner_detail">
+                                <span t-field="doc.address_partner_detail"/>
+                                <div t-field="doc.partner_shipping_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+                            </t>
+                            <t t-else="">
+                                <div t-field="doc.partner_shipping_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;,  &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+                            </t>
+
+                    </t>
+
+        </xpath>
+          <xpath expr="//td[@name='td_quantity']" position="replace">
+            <td name="td_quantity" class="o_td_quantity text-end">
+                <span t-out="int(line.product_uom_qty)" class="text-nowrap"/>
+                <span t-if="line.product_type != 'service'">
+                    <span t-field="line.product_uom">units</span>
+                    <span t-if="line.product_packaging_id">
+                    <span t-field="line.product_packaging_qty" t-options="{&quot;widget&quot;: &quot;integer&quot;}"/>
+                        <span t-field="line.product_packaging_id"/>)
+                    </span>
+                </span>
+            </td>
+        </xpath>
+    </template>
+
+<!--    Thay font chữ cho header-->
+        <template id="external_layout_standard_font"
+                  inherit_id="web.external_layout_standard">
+
+        <xpath expr="//t[@t-name='web.external_layout_standard']" position="inside">
+                <style>
+                    * {
+                        font-family: Arial, Helvetica, sans-serif !important;
+                    }
+                </style>
+            </xpath>
+
+        </template>
+</odoo>

@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_order_form_advanced_sync" model="ir.ui.view">
+            <field name="name">sale.order.form.advanced.sync</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="partner_shipping_ids" invisible="1"/>
+                    <field name="is_partner_parent" invisible="1"/>
+                    <field name="tracking_id" readonly="1"/>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="sale_area_id"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                        <attribute name="domain">
+                            ['|',
+                                ('id', '=', partner_id),
+                                '&amp;', ('parent_id', '=', partner_id), ('type', '=', 'delivery')
+                            ]
+                        </attribute>
+                    <attribute name="options">{'no_create': True, 'no_edit': True}</attribute>
+                    <attribute name="invisible">0</attribute>
+                    <attribute name="context">{}</attribute>
+
+                </xpath>
+                <xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+                        <attribute name="domain">
+                            ['|',
+                                ('id', '=', partner_id),
+                                '&amp;', ('parent_id', '=', partner_id), ('type', '=', 'invoice')
+                            ]
+                        </attribute>
+                    <attribute name="invisible">0</attribute>
+                    <attribute name="context">{}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_edit': True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                    <field name="address_partner_detail"/>
+                </xpath>
+                <xpath expr="//page[@name='order_lines']/field[@name='order_line']/list/field[@name='price_total'][1]"
+                       position="attributes">
+                    <attribute name="optional">show</attribute>
+                </xpath>
+                <xpath expr="//notebook" position="before">
+                    <group>
+                        <group>
+                            <field name="is_account_perm" invisible="1"/>
+                            <field name="is_paid" readonly="not is_account_perm"/>
+                            <field name="account_payable" readonly="not is_account_perm"/>
+                            <field name="mark_done_cron" readonly="1"/>
+                            <field name="total_diff" readonly="1"/>
+                            <field name="pancake_missing_info" readonly="1" invisible="not pancake_missing_info"/>
+                            <field name="shipping_fee" invisible="shipping_fee  &lt;= 0" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="combo_product_ids" readonly="1" widget="many2many_tags"/>
+                            <field name="total_discount_pancake" invisible="total_discount_pancake  &lt;= 0"
+                                   readonly="1"/>
+                        </group>
+                    </group>
+                </xpath>
+
+                <xpath expr="//page[@name='order_lines']/field[@name='order_line']/list/field[@name='price_total'][last()]"
+                       position="attributes">
+                    <attribute name="optional">show</attribute>
+                </xpath>
+                <xpath expr="//page[@name='order_lines']/field[@name='order_line']/list/field[@name='product_template_id']"
+                       position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_edit':True}</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='order_lines']/field[@name='order_line']/list/field[@name='price_total']"
+                       position="after">
+                    <field name="pancake_id" column_invisible="True"/>
+                    <field name="pancake_total_discount" readonly="1" optional="show" sum="sum"/>
+                </xpath>
+                <xpath expr="//page[@name='order_lines']/field[@name='order_line']/list/field[@name='state']"
+                       position="after">
+                    <field name="price_including_tax" optional="hiden" sum="sum_price_including_tax"/>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="pancake_order_id" invisible="1"/>
+                    <field name="pancake_source_id" required="True"/>
+                    <field name="date_pancake" readonly="1"/>
+                    <field name="pancake_status" readonly="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='tax_totals']" position="after">
+                    <div class="row mt16 align-items-center">
+<!--                        &lt;!&ndash; _______ Trợ giá _______ &ndash;&gt;-->
+<!--                        <label for="marketplace_voucher" class="col-9 text-end fw-bold">-->
+<!--                            Trợ giá:-->
+<!--                        </label>-->
+<!--                        <div class="col-3">-->
+<!--                            <strong style="font-size: 1.2em">-->
+<!--                                <span style="color:green;">-->
+<!--                                    <field name="marketplace_voucher" readonly="1"-->
+<!--                                           widget="monetary"-->
+<!--                                           options="{'currency_field': 'currency_id'}"/>-->
+<!--                                </span>-->
+<!--                            </strong>-->
+<!--                        </div>-->
+                        <!-- _______ Chênh lệch phí vận chuyển  _______ -->
+                        <label for="diff_shipping_fee" class="col-9 text-end fw-bold">
+                            Chênh lệch phí vận chuyển:
+                        </label>
+                        <div class="col-3">
+                            <strong style="font-size: 1.2em">
+                                <field name="diff_shipping_fee" readonly="1"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"/>
+                            </strong>
+                        </div>
+                        <!-- _______ Phí sàn _______ -->
+                        <label for="total_fee_marketplace" class="col-9 text-end fw-bold">
+                            Phí sàn:
+                        </label>
+                        <div class="col-3">
+                            <strong style="font-size: 1.2em">
+                                <field name="total_fee_marketplace" readonly="1"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"/>
+                            </strong>
+                        </div>
+
+                        <!-- _______ Tiền chuyển khoản _______ -->
+                        <label for="transfer_money" class="col-9 text-end fw-bold">
+                            Tiền chuyển khoản:
+                        </label>
+                        <div class="col-3">
+                            <strong style="font-size: 1.2em">
+                                <field name="transfer_money" readonly="1"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"/>
+                            </strong>
+                        </div>
+                        <!-- _______ Còn thiếu_______ -->
+                        <label for="pancake_after_discount" class="col-9 text-end fw-bold">
+                            Còn phải thu:
+                        </label>
+                        <div class="col-3">
+                            <strong style="font-size: 1.3em">
+                                <span style="color:red;">
+                                    <field name="pancake_after_discount" readonly="1" widget="monetary"
+                                           options="{'currency_field': 'currency_id'}"/>
+                                </span>
+                            </strong>
+                        </div>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="internal_note" force_save="1" readonly="1" invisible="pancake_status not in ['3']"/>
+                </xpath>
+                <xpath expr="//sheet/notebook/page[@name='other_information']" position="after">
+                    <page string="Pancake Sync">
+                        <group>
+                            <group>
+                                <field name="pancake_order_id" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Phí sàn">
+                                <field name="affiliate_commission" readonly="0"/>
+                                <field name="diff_shipping_fee" readonly="0"/>
+                                <field name="marketplace_voucher" readonly="0"/>
+                                <field name="payment_fee" readonly="0"/>
+                                <field name="platform_commission" readonly="0"/>
+                                <field name="seller_transaction_fee" readonly="0"/>
+                                <field name="service_fee" readonly="0"/>
+                                <field name="sfp_service_fee" readonly="0"/>
+                            </group>
+                            <group string="Địa chỉ giao hàng">
+                                <field name="shipping_full_name"/>
+                                <field name="shipping_phone"/>
+                                <field name="shipping_full_address"/>
+                                <field name="shipping_province_id"/>
+                                <field name="shipping_district_id"/>
+                                <field name="shipping_communes_id"/>
+                            </group>
+                        </group>
+                        <group string="Pancake Sync" groups="base.group_no_one">
+                            <field name="pancake_order_json" invisible="1"/>
+                            <field name="pancake_order_json_text" widget="text" readonly="1"/>
+                        </group>
+                    </page>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']//list//field[@name='product_uom_qty']"
+                        position="attributes">
+                    <attribute name="sum">product_uom_qty</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']//list//field[@name='qty_delivered']"
+                        position="attributes">
+                    <attribute name="sum">qty_delivered</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='validity_date']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+<!--                    <attribute name="readonly">0</attribute>-->
+                    <attribute name="string">Confirmation date</attribute>
+                </xpath>
+
+                <xpath expr="//header" position="inside">
+                    <button name="action_apply_discount_to_price" type="object"
+                            string="Áp dụng chiết khấu vào giá"
+                            confirm="Đơn giá sẽ được trừ theo % chiết khấu và % chiết khấu sẽ về 0. Tiếp tục?"/>
+                    <button name="action_revert_discount_to_price" type="object"
+                            string="Hoàn tác chiết khấu"
+                            confirm="Đơn giá và % chiết khấu sẽ được khôi phục về giá trị ban đầu. Tiếp tục?"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="advanced_sync_pancake_sale_order_tree" model="ir.ui.view">
+            <field name="name">advanced_sync_pancake.sale_order_tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.sale_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="sale_area_id" optional="hiden"/>
+                    <field name="shipping_full_name" optional="show"/>
+                    <field name="date_pancake" optional="hiden"/>
+                    <field name="date_updated_pancake" optional="show"/>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="before">
+                    <field name="is_paid" width="100px"/>
+                    <field name="account_payable" width="100px"/>
+                    <field name="pancake_missing_info" optional="hiden" width="250px"/>
+                    <field name="combo_product_ids" optional="hiden" widget="many2many_tags"/>
+
+
+                    <field name="pancake_status"
+                           widget="badge"
+                           width="150px"
+                           decoration-info="pancake_status in ['1','2','13','16',20]"
+                           decoration-success="pancake_status in ['3']"
+                           decoration-danger="pancake_status in ['4','5','6','7']"
+                           decoration-warning="pancake_status in ['9','11','12','15','17']"
+                           decoration-muted="pancake_status not in ['0','8','17']"
+                    />
+                    <field name="pancake_source_id" class="text-info" width="180px"/>
+                    <field name="pancake_order_id" optional="show" width="180px"/>
+                </xpath>
+                <xpath expr="//field[@name='amount_total']" position="after">
+                    <field name="pancake_after_discount" widget="monetary" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="sale_order_view_search_inherit_pancake" model="ir.ui.view">
+            <field name="name">sale.order.search.inherit.pancake.status</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <field name="pancake_order_id" string="Pancake ID"/>
+                    <separator/>
+                    <filter string="Create Date Pancake" name="filter_date_pancake" date="date_pancake"/>
+                    <filter string="Confirmation date"  name="filter_validity_date" date="validity_date"/>
+                    <separator/>
+
+<!--                    <filter string="Source from Facebook" name="source_from_facebook" domain="[('pancake_source_id', 'ilike', 'facebook')]"/>-->
+<!--                    <filter string="Source from Zalo" name="source_from_zalo" domain="[('pancake_source_id', 'ilike', 'zalo')]"/>-->
+<!--                    <filter string="Source from Yodee" name="source_from_yodee" domain="[('pancake_source_id', 'ilike', 'yodee')]"/>-->
+<!--                    <filter string="Source from Lazada" name="source_from_lazada" domain="[('pancake_source_id', 'ilike', 'lazada')]"/>-->
+<!--                    <filter string="Source from B2B" name="source_from_b2b" domain="[('pancake_source_id', 'ilike', 'b2b')]"/>-->
+<!--                    <filter string="Source from Instagram" name="source_from_instagram" domain="[('pancake_source_id', 'ilike', 'instagram')]"/>-->
+                    <separator/>
+                    <filter string="Pancake Orders" name="pancake_order" domain="[('pancake_order_id', '!=', False)]"/>
+                    <filter string="Pancake Combo Orders" name="combo_product_filter" domain="[('combo_product_ids', '!=', False)]"/>
+                    <separator/>
+                    <filter string="Pancake source" name="pancake_source_id" context="{'group_by': 'pancake_source_id'}"/>
+                    <separator/>
+                    <filter string="Confirmation date" name="validity_date_group" context="{'group_by': 'validity_date'}"/>
+                </xpath>
+
+                <xpath expr="//group[1]" position="inside">
+                    <filter string="Khu vực bán hàng" name="group_sale_area_id"
+                            context="{'group_by':'sale_area_id'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="model_sale_order_mass_action_check_paid" model="ir.actions.server">
+            <field name="name">Mark Payment completed</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_view_types">form,list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.mass_action_check_paid()</field>
+        </record>
+
+        <record id="model_sale_order_mass_action_check_account_payable" model="ir.actions.server">
+            <field name="name">Mark Payment account payable</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_view_types">form,list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.mass_action_check_account_payable()</field>
+        </record>
+
+        <record id="model_sale_order_mass_action_split_price_including_tax" model="ir.actions.server">
+            <field name="name">Split Price Including Tax</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_view_types">form,list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.split_price_including_tax()</field>
+        </record>
+    </data>
+</odoo>

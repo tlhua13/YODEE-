@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_pancake" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.advanced_sync_pancake</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="10"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app  string="Pancake Sync" data-string="Pancake Sync" name="advanced_sync_pancake" groups="base.group_system">
+                    <block title="API Configuration" name="pancake_api_configuration">
+                        <setting id="pancake_api_url" help="Configure your Pancake API URL endpoint" documentation="https://api-docs.pancake.vn">
+                            <label for="pancake_url" string="API URL"/>
+                            <field name="pancake_url" placeholder="e.g. https://api-docs.pancake.vn"/>
+                            <div class="text-muted">
+                                Enter the base URL for Pancake API
+                            </div>
+                        </setting>
+
+                        <setting id="pancake_api_key_setting" help="Your Pancake API authentication key">
+                            <label for="pancake_api_key" string="API Key"/>
+                            <field name="pancake_api_key" password="True" placeholder="Enter your API Key"/>
+                            <div class="text-muted">
+                                Provide your Pancake API Key for authentication
+                            </div>
+                        </setting>
+                    </block>
+
+                    <block title="Connection" name="pancake_connection">
+                        <setting id="pancake_test_connection" help="Test your connection to Pancake API and retrieve shop information">
+                            <div class="o_form_label">Get Shop Information</div>
+                            <a href="https://api-docs.pancake.vn" title="Documentation" class="o_doc_link" target="_blank"></a>
+                            <div class="text-muted">
+                                Retrieve shop information from Pancake API
+                            </div>
+                            <div class="mt8">
+                                <button name="get_info_pancake" icon="oi-arrow-right" type="object" string="Get Shop Info" class="btn-link"/>
+                            </div>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_pancake_config_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_id" ref="res_config_settings_view_form_pancake"/>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module': 'advanced_sync_pancake', 'bin_size': False}</field>
+    </record>
+
+</odoo>

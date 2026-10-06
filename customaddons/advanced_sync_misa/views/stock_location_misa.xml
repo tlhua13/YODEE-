@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="stock_location_misa_form_view" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.stock_location_misa.form</field>
+            <field name="model">stock.location.misa</field>
+            <field name="arch" type="xml">
+                <form string="stock_location_misa">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="Title"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="misa_inventory_code" invisible="1"/>
+                                <field name="misa_account_inventory"/>
+                            </group>
+                            <group>
+                                <field name="address"/>
+                            </group>
+                        </group>
+                        <group groups="base.group_no_one">
+                            <group>
+                                <field name="state"/>
+                            </group>
+                            <group>
+                                <field name="misa_id" readonly="1"/>
+                                <field name="branch_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="stock_location_misa_list_view" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.stock_location_misa.list</field>
+            <field name="model">stock.location.misa</field>
+            <field name="arch" type="xml">
+                <list string="ModelTitle">
+                    <field name="name"/>
+                    <field name="code"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="stock_location_misa_search_view" model="ir.ui.view">
+            <field name="name">ProjectName.stock_location_misa.search</field>
+            <field name="model">stock.location.misa</field>
+            <field name="arch" type="xml">
+                <search string="ModelTitle">
+                    <group expand="1" string="Group By">
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="stock_location_misa_act_window" model="ir.actions.act_window">
+            <field name="name">Location Misa</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.location.misa</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <!--  Stock    -->
+        <menuitem name="Location Misa"
+                  id="advanced_sync_misa_stock_location_misa_menu"
+                  parent="advanced_sync_misa.advanced_account_misa_dictionary_menu"
+                  sequence="15"
+                  action="stock_location_misa_act_window"/>
+
+
+        <!--   Stock in module Inventory     -->
+        <menuitem id="stock_misa" name="Misa" sequence="1000"
+                  parent="stock.menu_stock_config_settings"/>
+
+        <menuitem name="Location Misa"
+                  id="stock_location_misa_menu"
+                  parent="advanced_sync_misa.stock_misa"
+                  sequence="1"
+                  action="stock_location_misa_act_window"/>
+
+    </data>
+</odoo>

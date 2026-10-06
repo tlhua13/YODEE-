@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="view_order_line_inherit_list" model="ir.ui.view">
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                 <list string="Chi tiết đơn hàng">
+                    <field name="order_id" widget="many2one"/>
+                    <field name="confirm_date"/>
+                    <field name="date_order" optional="hiden"/>
+                    <field name="customer_code"/>
+                    <field name="order_partner_id"/>
+                    <field name="product_id" widget="many2one"/>
+                    <field name="product_code" string="Product code"/>
+                    <field name="branch_ids" widget="many2many_tags"/>
+                    <field name="pancake_source_id" widget="many2one"/>
+                    <field name="name" string="Diễn giải" optional="hiden"/>
+                    <field name="product_uom"/>
+                    <field name="product_uom_qty"/>
+                    <field name="price_unit"/>
+                    <field name="price_subtotal"/>
+                    <field name="total_fee_marketplace" optional="show"/>
+                    <field name="misa_credit_account" optional="show"/>
+                    <field name="misa_debit_account" optional="hiden"/>
+                    <field name="discount"/>
+                    <field name="qty_delivered"/>
+                    <field name="warehouse_code"/>
+                    <field name="warehouse_name"/>
+                    <field name="return_qty"/>
+                    <field name="return_value"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="sale_order_line_view_search_inherit" model="ir.ui.view">
+            <field name="name">sale.order.line.search.inherit</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_sales_order_line_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <separator/>
+                    <field string="Thương hiệu" name="branch_ids" />
+                    <separator/>
+                    <filter string="Thương hiệu" name="branch_ids_group" context="{'group_by': 'branch_ids'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_order_line_inherit_detail" model="ir.actions.act_window">
+            <field name="name">Order detail</field>
+            <field name="res_model">sale.order.line</field>
+            <field name="view_mode">list,pivot,graph</field>
+            <field name="context">
+                {
+                    'search_default_state': 1
+                }
+            </field>
+        </record>
+
+        <record id="view_sale_order_line_pivot_custom" model="ir.ui.view">
+            <field name="name">sale.order.line.pivot.custom</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <pivot string="Sales Analysis">
+                    <!-- ROW -->
+                    <field name="branch_ids" type="row"/>
+                    <field name="warehouse_name" type="row"/>
+                    <field name="customer_name" type="row"/>
+
+                    <!-- COLUMN -->
+                    <field name="delivery_status" type="col"/>
+                    <field name="date_order" interval="month"/>
+
+                    <!-- MEASURE -->
+                    <field name="product_uom_qty" type="measure"/>
+                    <field name="price_subtotal" type="measure"/>
+                    <field name="price_total" type="measure"/>
+        <!--            <field name="return_qty" type="measure"/>-->
+        <!--            <field name="return_value" type="measure"/>-->
+                </pivot>
+            </field>
+        </record>
+
+        <record id="sale_order_line_misa_view_search_inherit" model="ir.ui.view">
+            <field name="name">sale.order.line.misa.search.inherit</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_sales_order_line_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <separator/>
+                    <filter string="Ngày xác nhận"  name="filter_confirm_date" date="confirm_date"/>
+                    <separator/>
+                     <filter name="state"
+                            string="Đơn bán hàng"
+                            domain="[('state', 'in', ['sale'])]"/>
+                    <filter name="filter_date_order" string="Ngày đặt hàng" date="date_order"/>
+                </xpath>
+            </field>
+        </record>
+
+        <menuitem id="menu_order_line_inherit_detail"
+                  name="Order detail"
+                  parent="sale.sale_order_menu"
+                  action="action_order_line_inherit_detail"/>
+
+    </data>
+</odoo>

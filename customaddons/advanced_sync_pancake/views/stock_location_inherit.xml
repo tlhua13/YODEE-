@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="stock_location_form_view_inherit_pancake" model="ir.ui.view">
+            <field name="name">stock.location.form.inherit.pancake</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='usage']" position="after">
+                    <field name="pancake_warehouse_id"/>
+                </xpath>
+                <xpath expr="//group[@name='additional_info']" position="after">
+                    <group name="pancake_warehouse" string="Pancake Sync">
+                        <field name="pancake_warehouse_id"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="advanced_sync_pancake_view_location_tree2" model="ir.ui.view">
+            <field name="name">advanced_sync_pancake.view_location_tree2</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_tree2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='usage']" position="after">
+                    <field name="pancake_warehouse_id" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+

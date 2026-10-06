@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="advanced_account_payment_term_misa_form_view" model="ir.ui.view">
+            <field name="name">account.payment.term.misa.form</field>
+            <field name="model">account.payment.term.misa</field>
+            <field name="arch" type="xml">
+                <form string="Misa">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                            </group>
+                            <group>
+                                <field name="due_time"/>
+                                <field name="misa_id" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="discount_percent"/>
+                                <field name="discount_time"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="advanced_account_payment_term_misa_list_view" model="ir.ui.view">
+            <field name="name">account.payment.term.misa.list</field>
+            <field name="model">account.payment.term.misa</field>
+            <field name="arch" type="xml">
+                <list string="Misa">
+                    <field name="code"/>
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="advanced_account_payment_term_misa_search_view" model="ir.ui.view">
+            <field name="name">account.payment.term.misa.search</field>
+            <field name="model">account.payment.term.misa</field>
+            <field name="arch" type="xml">
+                <search string="Misa">
+                    <field name="name"/>
+                    <field name="code"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="advanced_account_payment_term_misa_act_window" model="ir.actions.act_window">
+            <field name="name">Payment Term</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.payment.term.misa</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <!--Payment Term-->
+        <menuitem id="advanced_account_misa_payment_term_menu"
+                  name="Payment Term"
+                  sequence="10"
+                  parent="advanced_sync_misa.advanced_account_misa_dictionary_menu"
+                  action="advanced_account_payment_term_misa_act_window"/>
+
+    </data>
+</odoo>

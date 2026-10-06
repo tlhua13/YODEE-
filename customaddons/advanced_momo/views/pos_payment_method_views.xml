@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="pos_payment_method_view_form_inherit_momo" model="ir.ui.view">
+        <field name="name">pos.payment.method.form.inherit.momo</field>
+        <field name="model">pos.payment.method</field>
+        <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='use_payment_terminal']" position="after">
+                <group invisible="use_payment_terminal != 'momo'" string="MoMo Configuration (optional override)">
+                    <field name="momo_partner_code" placeholder="Leave empty to use Settings"/>
+                    <field name="momo_access_key" password="True" placeholder="Leave empty to use Settings"/>
+                    <field name="momo_secret_key" password="True" placeholder="Leave empty to use Settings"/>
+                    <field name="momo_environment" placeholder="Leave empty to use Settings"/>
+                    <field name="momo_ipn_url" placeholder="Leave empty to use Settings"/>
+                    <field name="momo_default_partner_id" placeholder="Leave empty to use Settings"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

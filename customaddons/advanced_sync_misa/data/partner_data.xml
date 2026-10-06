@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <data>
+
+        <!-- FACEBOOK -->
+        <record id="partner_pancake_facebook" model="res.partner">
+            <field name="name">Khách lẻ bán trên Facebook</field>
+            <field name="customer_code">SAN_FACEBOOK</field>
+        </record>
+
+        <!-- TIKI -->
+        <record id="partner_pancake_tiki" model="res.partner">
+            <field name="name">Khách lẻ bán trên sàn Tiki</field>
+            <field name="customer_code">SAN_TIKI</field>
+        </record>
+
+        <!-- LAZADA -->
+        <record id="partner_pancake_lazada" model="res.partner">
+            <field name="name">Khách lẻ bán trên sàn  Lazada</field>
+            <field name="customer_code">SAN_LAZADA</field>
+        </record>
+
+        <!-- SHOPEE -->
+        <record id="partner_pancake_shopee" model="res.partner">
+            <field name="name">Khách lẻ bán trên sàn Shopee</field>
+            <field name="customer_code">SAN_SHOPEE</field>
+        </record>
+
+        <!-- TIKTOK -->
+        <record id="partner_pancake_tiktok" model="res.partner">
+            <field name="name">Khách lẻ bán trên sàn Tiktok</field>
+            <field name="customer_code">SAN_TIKTOK</field>
+        </record>
+
+        <!-- EVEN -->
+        <record id="partner_pancake_even" model="res.partner">
+            <field name="name">Khách lẻ bán triển lãm Event</field>
+            <field name="customer_code">SAN_EVENT</field>
+        </record>
+
+        <!-- INSTAGRAM -->
+        <record id="partner_pancake_instagram" model="res.partner">
+            <field name="name">Khách lẻ bán trên Instagram</field>
+            <field name="customer_code">SAN_INSTAGRAM</field>
+        </record>
+
+        <!-- Other retail customers -->
+        <record id="partner_other_retail_customers" model="res.partner">
+            <field name="name">Khách hàng lẻ khác</field>
+            <field name="customer_code">OTHER_RETAIL</field>
+        </record>
+    </data>
+</odoo>

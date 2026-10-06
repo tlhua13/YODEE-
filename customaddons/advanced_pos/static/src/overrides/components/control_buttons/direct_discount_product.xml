@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="advanced_pos_templates" xml:space="preserve">
+
+    <t t-inherit="point_of_sale.ControlButtons"
+       t-inherit-mode="extension">
+
+        <!-- CASE 1: !props.showRemainingButtons
+             -> thêm sau OrderlineNoteButton (bản thường) -->
+        <xpath
+            expr="//t[@t-if='!props.showRemainingButtons || (ui.isSmall and props.showRemainingButtons)']/OrderlineNoteButton"
+            position="after">
+            <button class="btn btn-light btn-lg lh-lg text-truncate w-auto"
+                t-att-disabled="!pos.get_order()?.get_selected_orderline()"
+                t-on-click="clickDirectDiscountProduct">
+                <i class="fa fa-tag me-1"/>
+            </button>
+        </xpath>
+
+        <!-- CASE 2: props.showRemainingButtons
+             -> thêm sau OrderlineNoteButton trong dialog -->
+        <xpath
+            expr="//t[@t-if='props.showRemainingButtons']//OrderlineNoteButton"
+            position="after">
+            <button class="btn btn-light btn-lg lh-lg text-truncate w-auto"
+                t-att-disabled="!pos.get_order()?.get_selected_orderline()"
+                t-on-click="clickDirectDiscountProduct">
+                <i class="fa fa-tag me-1"/>Giảm giá sản phẩm
+            </button>
+        </xpath>
+
+    </t>
+
+</templates>

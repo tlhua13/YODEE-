@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_wizard_popup_action_misa_features_update" model="ir.actions.server">
+        <field name="name"># Misa features Update</field>
+        <field name="state">code</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_product_template"/>
+        <field name="binding_model_id" ref="model_product_template"/>
+        <field name="binding_view_types">list</field>
+        <field name="code">action = records.sudo().action_misa_features_update()</field>
+    </record>
+    <record id="popup_misa_features_update_view_form" model="ir.ui.view">
+        <field name="name">popup_misa_features_update_view</field>
+        <field name="model">popup.misa.features.update</field>
+        <field name="arch" type="xml">
+            <form string="Misa features Update">
+                <group>
+                    <field name="update_option" required="1"/>
+                </group>
+                <footer>
+                    <button name="action_update" string="Submit" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

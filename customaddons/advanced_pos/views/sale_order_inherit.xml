@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="advanced_order_sale_view_order_form" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.sale_view_order_form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="points"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="advanced_pos_order_line_inherit_list" model="ir.ui.view">
+            <field name="name">advanced_pos.pos_order_line_inherit_list</field>
+            <field name="model">pos.order.line</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_order_tree_all_sales_lines"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name="seller_id" optional="show"/>
+                    <field name="brand_ids" widget="many2many_tags" optional="show"/>
+                    <field name="session_id" optional="hiden"/>
+                    <field name="config_id"  optional="hiden" />
+                    <field name="partner_id"/>
+                </xpath>
+
+                <xpath expr="//field[@name='order_id']" position="attributes">
+                    <attribute name="widget">many2one</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='product_id']" position="attributes">
+                    <attribute name="widget">many2one</attribute>
+                </xpath>
+                <xpath expr="//field[@name='create_date']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+                <xpath expr="//list" position="attributes">
+                    <attribute name="create">False</attribute>
+                    <attribute name="editable">bottom</attribute>
+                </xpath>
+
+                <!--  Đẩy qty price unit xuông cuối list-->
+                <xpath expr="//field[@name='qty']" position="replace"/>
+                <xpath expr="//field[@name='price_unit']" position="replace"/>
+
+                <xpath expr="//list" position="inside">
+                    <field name="qty"/>
+                    <field name="price_unit" widget="monetary"/>
+                </xpath>
+                <xpath expr="//field[@name='price_unit']" position="after">
+                    <field name="discount"/>
+                    <field name="price_subtotal"/>
+                    <field name="tax_ids"  widget="many2many_tags" optional="show" />
+                    <field name="price_subtotal_incl" optional="show" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="advanced_pos_order_view_pivot" model="ir.ui.view">
+            <field name="name">advanced_pos_order.view_pivot</field>
+            <field name="model">pos.order.line</field>
+            <field name="arch" type="xml">
+                <pivot string="Report" sample="1">
+                    <field name="brand_ids" type="row"/>
+                </pivot>
+            </field>
+        </record>
+
+
+
+        <record id="pos_order_line_inherit_act_window" model="ir.actions.act_window">
+            <field name="name">POS Order Line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pos.order.line</field>
+            <field name="view_mode">list,pivot,graph</field>
+        </record>
+
+        <record id="pos_brand_report_inherit_act_window" model="ir.actions.act_window">
+            <field name="name">POS Brand Report</field>
+            <field name="res_model">pos.order.line</field>
+            <field name="view_mode">pivot,graph,list</field>
+
+            <field name="domain">
+                [('brand_ids','!=',False)]
+            </field>
+            <field name="context">
+                {
+                    'pivot_view': True,
+                    'group_by': ['brand_ids']
+                }
+            </field>
+        </record>
+
+
+        <record id="view_pos_order_line_filter_inherit" model="ir.ui.view">
+            <field name="name">pos.order.line</field>
+            <field name="model">pos.order.line</field>
+            <field name="arch" type="xml">
+                <search string="Search POS Order Line">
+                    <field name="brand_ids" string="Brand"/>
+                    <field name="seller_id" string="Seller"/>
+                    <field name="product_id" string="Product"/>
+
+                     <filter string="Brand"
+                        name="group_by_brand"
+                        context="{'group_by':'brand_ids'}"/>
+
+                    <filter string="Seller"
+                            name="group_by_seller"
+                            context="{'group_by':'seller_id'}"/>
+
+
+                    <filter string="Product"
+                            name="group_by_product"
+                            context="{'group_by':'product_id'}"/>
+                </search>
+            </field>
+        </record>
+
+        <!--  Stock    -->
+        <menuitem name="Order Line"
+                  id="advanced_pos_pos_order_line_inherit_menu"
+                  parent="point_of_sale.menu_point_of_sale"
+                  sequence="15"
+                  action="pos_order_line_inherit_act_window"/>
+
+        <menuitem id="menu_pos_brand_report"
+                  name="Brands report"
+                  action="pos_brand_report_inherit_act_window"
+                  parent="point_of_sale.menu_point_rep"
+                  sequence="2"/>
+
+    </data>
+</odoo>

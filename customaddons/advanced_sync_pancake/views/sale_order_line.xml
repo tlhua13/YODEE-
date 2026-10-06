@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="advanced_sync_pancake_view_sales_order_line_filter" model="ir.ui.view">
+            <field name="name">advanced_sync_pancak.view_sales_order_line_filter</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_sales_order_line_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <separator/>
+                    <separator/>
+                    <filter string="Source from Facebook" name="source_from_facebook" domain="[('pancake_source_id', 'ilike', 'facebook')]"/>
+                    <filter string="Source from Zalo" name="source_from_zalo" domain="[('pancake_source_id', 'ilike', 'zalo')]"/>
+                    <filter string="Source from Yodee" name="source_from_yodee" domain="[('pancake_source_id', 'ilike', 'yodee')]"/>
+                    <filter string="Source from Lazada" name="source_from_lazada" domain="[('pancake_source_id', 'ilike', 'lazada')]"/>
+                    <filter string="Source from B2B" name="source_from_b2b" domain="[('pancake_source_id', 'ilike', 'b2b')]"/>
+                    <filter string="Source from Instagram" name="source_from_instagram" domain="[('pancake_source_id', 'ilike', 'instagram')]"/>
+                    <separator/>
+                    <filter string="Pancake Orders" name="pancake_order" domain="[('pancake_order_id', '!=', False)]"/>
+                    <separator/>
+                    <filter string="Pancake source" name="pancake_source_id" context="{'group_by': 'pancake_source_id'}"/>
+                    <filter string="Sale Area" name="sale_area_id_group" context="{'group_by': 'sale_area_id'}"/>
+                    <filter string="Customer" name="order_partner_id_group" context="{'group_by': 'order_partner_id'}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

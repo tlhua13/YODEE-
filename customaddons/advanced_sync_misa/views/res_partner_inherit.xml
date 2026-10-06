@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="advanced_sync_misa_view_partner_form" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.view_partner_form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat']" position="before">
+                    <field name="customer_code"/>
+                    <field name="is_wholesaler"/>
+                    <field name="name_wholesaler" required="is_wholesaler"/>
+                </xpath>
+                <xpath expr="//field[@name='child_ids']/form/sheet/field[@name='type']" position="before">
+                    <field name="company_type" widget="radio" options="{'horizontal': true}"/> <br/>
+                </xpath>
+
+                <xpath expr="//page[last()]" position="after">
+                    <page string="Sync Misa" name="sync_misa">
+                        <group>
+                            <group>
+                                <field name="pay_account"/>
+                                <field name="receive_account"/>
+                            </group>
+                            <group>
+                                <field name="misa_id"/>
+                                <field name="branch_id"/>
+                                <field name="is_sync_misa"/>
+                            </group>
+                            <group>
+                                <field name="is_customer"/>
+                                <field name="is_employee"/>
+                                <field name="is_vendor"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="advanced_sync_misa_view_partner_tree" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.view_partner_tree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='phone']" position="before">
+                    <field name="customer_code" optional="show"/>
+                    <field name="name_wholesaler" optional="show"/>
+                    <field name="is_wholesaler" optional="show"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="advanced_sync_misa_view_res_partner_filter" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.view_res_partner_filter</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='type_company']" position="after">
+                    <separator/>
+                    <filter string="Đồng bộ Misa" name="is_sync_misa" domain="[('is_sync_misa','=', True)]"/>
+                    <filter string="Là khách sỉ" name="is_wholesaler_filter" domain="[('is_wholesaler','=', True)]"/>
+                </xpath>
+                <xpath expr="//group[1]" position="inside">
+                    <filter string="Đồng bộ Misa" name="group_is_sync_misa" context="{'group_by':'is_sync_misa'}"/>
+                    <filter string="Là khách sỉ" name="group_is_wholesaler" context="{'group_by':'is_wholesaler'}"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="customer_code"/>
+                    <field name="name_wholesaler"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="contacts.action_contacts" model="ir.actions.act_window">
+            <field name="domain" eval="[('parent_id','=',False)]"/>
+        </record>
+
+        <record id="advanced_sync_misa_action_contacts" model="ir.actions.act_window">
+            <field name="name">Contacts</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,list,form,activity</field>
+            <field name="search_view_id" ref="base.view_res_partner_filter"/>
+            <field name="context">{'default_is_company': True, 'search_default_is_sync_misa':1}</field>
+        </record>
+
+
+        <menuitem name="Contacts"
+                  id="advanced_sync_misa_res_partner_misa_menu"
+                  parent="advanced_sync_misa.advanced_account_misa_dictionary_menu"
+                  sequence="1"
+                  action="advanced_sync_misa_action_contacts"/>
+    </data>
+</odoo>

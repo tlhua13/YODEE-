@@ -1,0 +1,177 @@
+{
+    "data": [
+        {
+            "average_imported_price": 3.0e5,
+            "barcode": "44444444",
+            "bonus_variations": [],
+            "composite_products": [],
+            "display_id": "AERO-X-2",
+            "fields": [],
+            "id": "fe55b00b-9111-4315-85bd-86f174711334",
+            "images": [
+                "https://content.pancake.vn/2-2510/2025/10/25/0ee7b4a7b5f21a4f8c211be52551b3e00346d798.jpg"
+            ],
+            "inserted_at": "2025-10-25T14:01:55.571962",
+            "is_composite": false,
+            "is_hidden": false,
+            "is_locked": false,
+            "is_removed": null,
+            "is_sell_negative_variation": true,
+            "last_imported_price": 300000,
+            "price_at_counter": 0,
+            "product": {
+                "categories": [
+                    {
+                        "id": 1842061110,
+                        "name": "Xe đẩy"
+                    }
+                ],
+                "display_id": "AERO-X",
+                "image": null,
+                "inserted_at": "2025-10-25T14:01:55",
+                "is_published": null,
+                "manipulation_warehouses": [],
+                "name": "Unilove Xe đẩy AERO-X khung carbon",
+                "note_product": "Khối lượng xe đẩy siêu nhẹ chỉ 5,3kg cùng thiết kế thông minh dễ dàng gấp gọn và mở ra chỉ bằng một tay với một thao tác đơn giản giúp việc sử dụng và di chuyển xe đẩy thoải mái và nhẹ nhàng hơn rất nhiều. \r\n- Khung xe carbon với đặc tính siêu nhẹ, cực kỳ cứng cáp, độ bề cao, hấp thụ rung động rất tốt, mang lại cảm giác êm ái hơn khi di chuyển.",
+                "supplier_product_ids": [
+                    307012156
+                ],
+                "tags": []
+            },
+            "product_id": "13cd363b-7236-48d7-8b91-050e8f7596c7",
+            "remain_quantity": 6,
+            "retail_price": 6570000,
+            "retail_price_after_discount": 6570000,
+            "total_purchase_price": 1800000,
+            "variations_warehouses": [
+                {
+                    "actual_remain_quantity": 6,
+                    "batch_position": null,
+                    "pending_quantity": 0,
+                    "remain_quantity": 6,
+                    "returning_quantity": 0,
+                    "selling_avg": null,
+                    "shelf_position": null,
+                    "total_quantity": 10,
+                    "waiting_quantity": 0,
+                    "warehouse_id": "a61945bd-9951-42c1-9d6c-08bfa19cfeb3"
+                }
+            ],
+            "videos": null,
+            "weight": 0,
+            "wholesale_price": []
+        },
+        {
+            "average_imported_price": 0,
+            "barcode": "44444444",
+            "bonus_variations": [],
+            "composite_products": [],
+            "display_id": "AERO-X-1",
+            "fields": [],
+            "id": "2be65aa1-c059-4e53-a86c-c4af9e852430",
+            "images": [],
+            "inserted_at": "2025-11-03T04:36:03.578548",
+            "is_composite": false,
+            "is_hidden": false,
+            "is_locked": false,
+            "is_removed": null,
+            "is_sell_negative_variation": true,
+            "last_imported_price": 300000,
+            "price_at_counter": 0,
+            "product": {
+                "categories": [
+                    {
+                        "id": 1842061110,
+                        "name": "Xe đẩy"
+                    }
+                ],
+                "display_id": "AERO-X",
+                "image": null,
+                "inserted_at": "2025-10-25T14:01:55",
+                "is_published": null,
+                "manipulation_warehouses": [],
+                "name": "Unilove Xe đẩy AERO-X khung carbon",
+                "note_product": "Khối lượng xe đẩy siêu nhẹ chỉ 5,3kg cùng thiết kế thông minh dễ dàng gấp gọn và mở ra chỉ bằng một tay với một thao tác đơn giản giúp việc sử dụng và di chuyển xe đẩy thoải mái và nhẹ nhàng hơn rất nhiều. \r\n- Khung xe carbon với đặc tính siêu nhẹ, cực kỳ cứng cáp, độ bề cao, hấp thụ rung động rất tốt, mang lại cảm giác êm ái hơn khi di chuyển.",
+                "supplier_product_ids": [
+                    307012156
+                ],
+                "tags": []
+            },
+            "product_id": "13cd363b-7236-48d7-8b91-050e8f7596c7",
+            "remain_quantity": 0,
+            "retail_price": 6570000,
+            "retail_price_after_discount": 6570000,
+            "total_purchase_price": 0,
+            "variations_warehouses": [],
+            "videos": null,
+            "weight": 0,
+            "wholesale_price": []
+        },
+        {
+            "average_imported_price": 2.0e5,
+            "barcode": "1-1",
+            "bonus_variations": [],
+            "composite_products": [],
+            "display_id": "1",
+            "fields": [],
+            "id": "def734a7-6407-4579-988f-1d622a400ba0",
+            "images": [
+                "https://content.pancake.vn/2-2510/2025/10/25/42aba1176a8d4d84e8bde59291314c971b509294.jpg"
+            ],
+            "inserted_at": "2025-10-25T13:52:23.940057",
+            "is_composite": false,
+            "is_hidden": false,
+            "is_locked": false,
+            "is_removed": null,
+            "is_sell_negative_variation": true,
+            "last_imported_price": 200000,
+            "price_at_counter": 0,
+            "product": {
+                "categories": [
+                    {
+                        "id": 614063125,
+                        "name": "Khăn"
+                    }
+                ],
+                "display_id": "LANGE",
+                "image": null,
+                "inserted_at": "2025-10-25T13:52:23",
+                "is_published": null,
+                "manipulation_warehouses": [],
+                "name": "L’Ange Khăn vải bông 3 lớp 90x90cm (set 2 cái)",
+                "note_product": "- Chất liệu 100% sợi bông thiên nhiên, không chứa hóa chất gây hại như chất tẩy trắng, chất làm mềm, formaldehyde.\r\n- Được đóng gói bằng bao bì kháng khuẩn y tế nên mở ra dùng được ngay mà không cần giặt trước.\r\n- Được sản xuất trong môi trường không bụi đạt chuẩn y tế.\r\n- Tính thấm hút cao, càng giặt càng mềm, độ bền cao, không xổ sợi.\r\n- Đã được kiểm định FDA (Cục quản lý Thực phẩm và Dược phẩm Hoa Kỳ).\r\n- Được chuyên dùng trong các bệnh viện và trung tâm chăm sóc mẹ và bé tại nước ngoài.\r\n- Thích hợp làm khăn quấn, chăn mỏng cho bé, khăn che cho bé bú, khăn che xe đẩy…",
+                "supplier_product_ids": [
+                    307012156
+                ],
+                "tags": []
+            },
+            "product_id": "8f1cb79c-487b-4a89-a86b-daf74b6e2d6f",
+            "remain_quantity": 2,
+            "retail_price": 0,
+            "retail_price_after_discount": 0,
+            "total_purchase_price": 400000,
+            "variations_warehouses": [
+                {
+                    "actual_remain_quantity": 2,
+                    "batch_position": null,
+                    "pending_quantity": 0,
+                    "remain_quantity": 2,
+                    "returning_quantity": 0,
+                    "selling_avg": null,
+                    "shelf_position": null,
+                    "total_quantity": 10,
+                    "waiting_quantity": 0,
+                    "warehouse_id": "a61945bd-9951-42c1-9d6c-08bfa19cfeb3"
+                }
+            ],
+            "videos": null,
+            "weight": 0,
+            "wholesale_price": []
+        }
+    ],
+    "page_number": 1,
+    "page_size": 30,
+    "success": true,
+    "total_entries": 3,
+    "total_pages": 1
+}

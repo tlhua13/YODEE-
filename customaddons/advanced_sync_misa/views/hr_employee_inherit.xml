@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="advanced_sync_misa_view_employee_form" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.view_employee_form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='mobile_phone']" position="before">
+                    <field name="employee_code_misa"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

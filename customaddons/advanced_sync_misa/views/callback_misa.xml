@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="callback_misa_form_view" model="ir.ui.view">
+            <field name="name">callback_misa.form</field>
+            <field name="model">callback.misa</field>
+            <field name="arch" type="xml">
+                <form string="Call Back Misa">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="transaction_type"/>
+                                <field name="org_refid"/>
+                                <field name="success"/>
+                                <field name="signature"/>
+                            </group>
+                            <group>
+                                <field name="session_id"/>
+                                <field name="error_message"/>
+                                <field name="voucher_type"/>
+                            </group>
+                        </group>
+
+                        <group string="Link Models">
+                            <group>
+                                <field name="purchase_id"/>
+                                <field name="sale_order_id"/>
+                            </group>
+                            <group>
+                                <field name="picking_id"/>
+                                <field name="stock_audit_misa_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="callback_misa_list_view" model="ir.ui.view">
+            <field name="name">callback_misa.list</field>
+            <field name="model">callback.misa</field>
+            <field name="arch" type="xml">
+                <list string="Call Back Misa" default_order="create_date desc">
+                    <field name="create_date"/>
+                    <field name="transaction_type"/>
+                    <field name="voucher_type"/>
+                    <field name="org_refid" optional="hide"/>
+                    <field name="success_odoo"/>
+                    <field name="success" optional="hide"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="callback_misa_search_view" model="ir.ui.view">
+            <field name="name">callback_misa.search</field>
+            <field name="model">callback.misa</field>
+            <field name="arch" type="xml">
+                <search string="Call Back Misa">
+                    <group expand="1" string="Group By">
+                        <filter string="Success" name="success" domain="[]" context="{'group_by':'success'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_update_link_data_callback_misa" model="ir.actions.server">
+            <field name="name"># Cập nhật Link Data</field>
+            <field name="state">code</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_callback_misa"/>
+            <field name="binding_model_id" ref="model_callback_misa"/>
+            <field name="binding_view_types">list</field>
+            <field name="code">action = records.sudo().update_link_data_callback_misa()</field>
+        </record>
+
+        <record id="callback_misa_act_window" model="ir.actions.act_window">
+            <field name="name">Call Back Misa</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">callback.misa</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem name="Call Back Misa" id="callback_misa_menu"
+                  sequence="1000"
+                  parent="advanced_sync_misa.advanced_account_misa_dictionary_menu"
+                  action="callback_misa_act_window"/>
+
+    </data>
+</odoo>

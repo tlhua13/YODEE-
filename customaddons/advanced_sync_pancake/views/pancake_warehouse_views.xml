@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- list View -->
+        <record id="pancake_warehouse_list_view" model="ir.ui.view">
+            <field name="name">pancake.warehouse.list</field>
+            <field name="model">pancake.warehouse</field>
+            <field name="arch" type="xml">
+                <list string="Pancake Warehouses">
+                    <field name="name"/>
+                    <field name="pancake_warehouse_id"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="pancake_warehouse_form_view" model="ir.ui.view">
+            <field name="name">pancake.warehouse.form</field>
+            <field name="model">pancake.warehouse</field>
+            <field name="arch" type="xml">
+                <form string="Pancake Warehouse">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="pancake_warehouse_id"/>
+                                <field name="pancake_custom_id"/>
+                                <field name="phone_number"/>
+                                <field name="address"/>
+                                <field name="full_address"/>
+                            </group>
+                            <group>
+                                <field name="api_district_id"/>
+                                <field name="api_province_id"/>
+                                <field name="api_communes_id"/>
+                            </group>
+                            <field name="warehouse_json" widget="jsonb" invisible="1"/>
+                        </group>
+                        <notebook>
+                            <page string="Đồng bộ Pancake" groups="base.group_no_one">
+                                <field name="warehouse_json_text"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_open_pancake_warehouse" model="ir.actions.act_window">
+            <field name="name">Pancake Warehouse</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pancake.warehouse</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <!-- Menu Item -->
+        <menuitem
+                id="pancake_warehouse_menu"
+                name="Pancake Warehouse"
+                action="action_open_pancake_warehouse"
+                parent="advanced_sync_pancake.pancake_connector_menu_root"
+                sequence="35"/>
+    </data>
+</odoo>
+

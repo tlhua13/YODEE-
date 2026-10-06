@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+       <record id="advanced_sync_misa_product_supplierinfo_inherit_view" model="ir.ui.view">
+            <field name="name">advanced.sync.misa.product.supplierinfo</field>
+            <field name="model">product.supplierinfo</field>
+            <field name="inherit_id" ref="purchase.product_product_supplierinfo_tree_view2"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='price']" position="attributes">
+                    <attribute name="groups">advanced_sync_misa.group_view_cost_price,base.group_system</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

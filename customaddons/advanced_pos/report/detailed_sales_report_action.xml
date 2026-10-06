@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_sale_report_pdf" model="ir.actions.report">
+            <field name="name">Báo cáo bán hàng</field>
+            <field name="model">pos.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">advanced_pos.sale_report_pdf</field>
+            <field name="report_file">advanced_pos.sale_report_pdf</field>
+            <field name="print_report_name">'Bao_cao_ban_hang'</field>
+            <field name="binding_model_id" ref="model_pos_order"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

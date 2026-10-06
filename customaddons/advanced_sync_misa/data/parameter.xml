@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record model="ir.config_parameter" id="timezone_vn">
+            <field name="key">advanced_sync_misa.timezone_vn</field>
+            <field name="value">+07:00</field>
+        </record>
+        <record model="ir.config_parameter" id="namespace_uuid">
+            <field name="key">advanced_sync_misa.namespace_uuid</field>
+            <field name="value">12345678-1234-5678-80b4-00c04fd430c8</field>
+        </record>
+        <record model="ir.config_parameter" id="log_retention_days">
+            <field name="key">yodee.log_retention_days</field>
+            <field name="value">7</field>
+        </record>
+    </data>
+</odoo>

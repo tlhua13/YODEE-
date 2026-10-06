@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sale_area_tree_view" model="ir.ui.view">
+            <field name="name">sale_area.tree</field>
+            <field name="model">sale.area</field>
+            <field name="arch" type="xml">
+                <list string="Sale Area" editable="bottom">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="sale_area_act_window" model="ir.actions.act_window">
+            <field name="name">Sale Area</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.area</field>
+            <field name="view_mode">list</field>
+        </record>
+
+        <menuitem name="Sale Area"
+                  id="sale_area_menu"
+                  parent="contacts.menu_contacts"
+                  sequence="10"
+                  action="sale_area_act_window"/>
+
+        <menuitem name="Sale Area"
+                  id="sale_area_menu"
+                  parent="sale.sale_order_menu"
+                  action="sale_area_act_window"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<templates id="pos_partner_noti_order_summary" xml:space="preserve">
+
+    <t t-name="pos_partner.OrderSummary"
+       t-inherit="point_of_sale.OrderSummary"
+       t-inherit-mode="extension">
+        <!-- Chèn thêm dòng vào OrderSummary -->
+        <xpath expr="//OrderWidget/t[@t-set-slot='details']" position="inside">
+            <div t-if='pos.get_order().getNotiExpiryPoint and pos.get_order()?.get_selected_orderline()' class="d-flex justify-content-between mt-2 px-3 py-2 rounded-3 bg-white">
+                    <div class="d-flex justify-content-between w-100 fs-2" style="font-size: 1.0rem !important;">
+                        <span t-esc="'Điểm sắp hết hạn:'" class="loyalty-points-title fw-bolder" style="font-size: 1.0rem !important;"/>
+                        <span class='value'><t t-esc='pos.get_order().getNotiExpiryPoint'/></span>
+                    </div>
+                </div>
+        </xpath>
+
+    </t>
+</templates>

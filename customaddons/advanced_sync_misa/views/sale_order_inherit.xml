@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="advanced_order_sale_view_order_form" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.sale_view_order_form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="number_of_days_owed"/>
+                    <field name="misa_status" invisible="1"/>
+                    <field name="check_currency_vnd" invisible="1"/>
+                    <field name="exchange_rate" force_save="1" readonly="check_currency_vnd"/>
+                    <field name="convert" force_save="1" readonly="1"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="name_wholesaler" invisible="not name_wholesaler"/>
+                    <field name="is_used_custom_tax"/>
+                </xpath>
+                <xpath expr="//header/button[@name='action_cancel']" position="before">
+                    <button name="sync_misa_sale_order" class="oe_highlight" type="object" string="Sync Misa"
+                            invisible="state not in ['sale','done'] or misa_status in ['synced']"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="misa_status" invisible="1"/>
+                    <h2 style="color: #4d4d4d!important;text-align:left"
+                        invisible="not id or state in ['draft','sent'] or misa_status != 'not_synced'">
+                        Misa: Unsynchronized
+                        <field name="noti_status_misa"/>
+                    </h2>
+                    <h2 style="color: green !important;text-align:left"
+                        invisible="not id or state in ['draft','sent'] or misa_status != 'synced'">
+                        Misa: Synchronized
+                        <field name="noti_status_misa"/>
+                    </h2>
+                    <h2 style="color: red !important;text-align:left"
+                        invisible="not id or state in ['draft','sent'] or misa_status != 'sync_failed'">
+                        Misa: Synchronization Failed
+                        <field name="noti_status_misa"/>
+                    </h2>
+                </xpath>
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="yodee_invoice_number"/>
+                    <field name="yodee_invoice_code"/>
+                    <field name="yodee_invoice_date"/>
+                </xpath>
+                <xpath expr="//page[last()]" position="after">
+                    <page string="Sync Misa" name="sync_misa" groups="base.group_no_one">
+                        <group>
+                            <group>
+                                <field name="misa_id"/>
+                                <field name="finish_sync_misa" readonly="1"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="domain">[('parent_id', '=', False)]</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']//list//field[@name='product_template_id']" position="after">
+                    <field name="return_qty"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']//list//field[@name='tax_id']" position="after">
+                    <field name="price_tax"  widget="monetary" optional="show" options="{'currency_field': 'currency_id'}" readonly="not parent.is_used_custom_tax"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']//list//field[@name='price_subtotal']" position="attributes">
+                    <attribute name="readonly">not parent.is_used_custom_tax</attribute>
+                    <attribute name="optional">show</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale_order_view_search_inherit_misa" model="ir.ui.view">
+            <field name="name">sale.order.search.inherit.misa.status</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <field name="name_wholesaler" string="Name Wholesaler"/>
+                    <filter name="misa_not_synced"
+                            string="Chưa đồng bộ MISA"
+                            domain="[('misa_status','=','not_synced')]"/>
+                    <filter name="misa_synced"
+                            string="Đã đồng bộ MISA"
+                            domain="[('misa_status','=','synced')]"/>
+                    <filter name="misa_sync_failed"
+                            string="Đông bộ không thành công Misa"
+                            domain="[('misa_status','=','sync_failed')]"/>
+                    <separator/>
+                    <filter name="is_wholesaler"
+                            string="Là khách sỉ"
+                            domain="[('is_wholesaler','=',True)]"/>
+
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="advanced_sync_misa_sale_order_view_search_inherit_sale" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.sale_order_view_search_inherit_sale</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.sale_order_view_search_inherit_sale"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <filter name="misa_not_synced"
+                            string="Chưa đồng bộ MISA"
+                            domain="[('misa_status','=','not_synced')]"/>
+                    <filter name="misa_synced"
+                            string="Đã đồng bộ MISA"
+                            domain="[('misa_status','=','synced')]"/>
+                    <filter name="misa_sync_failed"
+                            string="Đông bộ không thành công Misa"
+                            domain="[('misa_status','=','sync_failed')]"/>
+                    <separator/>
+                    <filter name="is_wholesaler"
+                            string="Là khách sỉ"
+                            domain="[('is_wholesaler','=',True)]"/>
+                </xpath>
+
+            </field>
+        </record>
+        
+        <!--        list view inherit-->
+        <record id="sale_order_list_view_search_inherit_misa" model="ir.ui.view">
+            <field name="name">sale.order.list.view.inherit.misa</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="arch" type="xml">
+                <xpath expr="//list" position="inside">
+                    <field name="misa_status"
+                           widget="badge"
+                           width="120px"
+                           decoration-success="misa_status == 'synced'"
+                           decoration-danger="misa_status == 'sync_failed'"
+                           decoration-muted="misa_status == 'not_synced'"
+                    />
+                </xpath>
+                <xpath expr="//list/field[@name='name']" position="after">
+                    <field name="validity_date" string="Ngày xác nhận"/>
+                    <field name="total_fee_marketplace" string="Total fee marketplace"  sum="total_fee_marketplace"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="advanced_sync_pancake_sale_order_tree" model="ir.ui.view">
+            <field name="name">advanced_sync_pancake.sale_order_tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.sale_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="name_wholesaler" optional="show"/>
+                    <field name="yodee_invoice_date" optional="show"/>
+                    <field name="yodee_invoice_code" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="model_sale_order_mass_action_reconfirm_sync_misa" model="ir.actions.server">
+            <field name="name">Reconfirm MISA synchronization</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_view_types">form,list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.sync_misa_sale_order()</field>
+        </record>
+    </data>
+</odoo>

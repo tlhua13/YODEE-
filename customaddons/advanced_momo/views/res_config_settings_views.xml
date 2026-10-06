@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_momo" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.advanced_momo</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="10"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+
+                <app string="MoMo" data-string="MoMo" name="advanced_momo" groups="base.group_system">
+
+                    <block title="MoMo API Credentials" name="momo_api_credentials">
+                        <setting id="momo_partner_code" help="Your MoMo Partner Code">
+                            <label for="momo_partner_code" string="Partner Code"/>
+                            <field name="momo_partner_code" placeholder="e.g. MOMOVTLS20230418" class="text-center"/>
+                        </setting>
+
+                        <setting id="momo_access_key" help="Your MoMo Access Key">
+                            <label for="momo_access_key" string="Access Key"/>
+                            <field name="momo_access_key" password="True" class="text-center"/>
+                        </setting>
+
+                        <setting id="momo_secret_key" help="Your MoMo Secret Key">
+                            <label for="momo_secret_key" string="Secret Key"/>
+                            <field name="momo_secret_key" password="True" class="text-center"/>
+                        </setting>
+
+                        <setting id="momo_environment" help="Select MoMo environment">
+                            <label for="momo_environment" string="Environment"/>
+                            <field name="momo_environment" class="text-center"/>
+                        </setting>
+
+                        <setting id="momo_ipn_url" help="Base URL for MoMo webhook callback">
+                            <label for="momo_ipn_url" string="IPN Base URL"/>
+                            <field name="momo_ipn_url" placeholder="https://yourdomain.com" class="text-center"/>
+                            <div class="text-muted">
+                                Leave empty to use system default (web.base.url)
+                            </div>
+                        </setting>
+
+                        <setting id="momo_default_partner" help="Default customer when POS order has no customer (Khách lẻ)">
+                            <label for="momo_default_partner_id" string="Default Customer (Khách lẻ)"/>
+                            <field name="momo_default_partner_id"/>
+                            <div class="text-muted">
+                                Auto-assign this customer when POS order uses MoMo payment without a customer.
+                            </div>
+                        </setting>
+                    </block>
+
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_momo_config_settings" model="ir.actions.act_window">
+        <field name="name">MoMo Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_id" ref="res_config_settings_view_form_momo"/>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module': 'advanced_momo', 'bin_size': False}</field>
+    </record>
+
+</odoo>

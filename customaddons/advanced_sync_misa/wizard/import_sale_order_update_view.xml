@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <!--     Wizard view of user import -->
+    <record id="import_sale_order_update_view_form" model="ir.ui.view">
+        <field name="name">import.sale.order.update.view.form</field>
+        <field name="model">import.sale.order.update</field>
+        <field name="arch" type="xml">
+        <form string="User Options">
+            <group>
+                <field name="file" filename="file_name" required="1"/>
+                <field name="file_name" invisible="1"/>
+            </group>
+
+            <footer>
+                <button name="import_file_ver" string="Cập nhật thông tin sản phẩm" type="object" default_focus="1" class="oe_highlight"/>
+                <button string="Cancel" class="btn btn-default" special="cancel"/>
+            </footer>
+        </form>
+        </field>
+    </record>
+
+    <record id="import_sale_order_update_custom_action" model="ir.actions.act_window">
+        <field name="name">Cập nhận SO từ file excel</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">import.sale.order.update</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+<menuitem id="menu_product_import_custom_sale"
+          name="Cập nhận SO từ file excel"
+          action="import_sale_order_update_custom_action"
+        parent="sale.menu_sale_config"
+          sequence="999"/>
+
+</odoo>

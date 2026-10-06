@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="account_account_misa_form_view" model="ir.ui.view">
+            <field name="name">account_account_misa.form_view</field>
+            <field name="model">account.account.misa</field>
+            <field name="arch" type="xml">
+                <form string="account_account_misa">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name_vn"/>
+                            <h1>
+                                <field name="name_vn" required="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <!-- <field name="name" string="English name" required="1"/>-->
+                                <field name="code" required="1"/>
+                                <field name="misa_features"/>
+                            </group>
+                            <group>
+                                <field name="misa_id" readonly="1"/>
+                                <field name="parent_id" invisible="1"/>
+                                <field name="misa_parent"/>
+                            </group>
+                            <group>
+                                <field name="note"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="account_account_misa_list_view" model="ir.ui.view">
+            <field name="name">account_account_misa.list</field>
+            <field name="model">account.account.misa</field>
+            <field name="arch" type="xml">
+                <list string="account_account_misa" decoration-info="parent_id == False">
+                    <field name="code"/>
+                    <field name="name_vn"/>
+                    <field name="parent_id" invisible="1"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="account_account_misa_search_view" model="ir.ui.view">
+            <field name="name">account_account_misa_search_view.search</field>
+            <field name="model">account.account.misa</field>
+            <field name="arch" type="xml">
+                <search string="account_account_misa" >
+                    <group expand="1">
+                        <field name="code"/>
+                        <field name="name"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="account_account_misa_act_window" model="ir.actions.act_window">
+            <field name="name">Account Sets</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.account.misa</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+
+        <menuitem id="advanced_sync_misa_account_account_misa_menu"
+                  name="Account Sets" sequence="1000"
+                  parent="advanced_sync_misa.advanced_account_misa_dictionary_menu"
+                  action="account_account_misa_act_window"/>
+
+        <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
+        <menuitem id="menu_account_misa_config"
+                  name="Misa" sequence="1000"
+                  parent="account.menu_finance_configuration"/>
+
+        <menuitem name="Account Misa"
+                  id="account_account_misa_menu"
+                  parent="menu_account_misa_config"
+                  action="account_account_misa_act_window"/>
+
+    </data>
+</odoo>

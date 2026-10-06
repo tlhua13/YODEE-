@@ -1,0 +1,318 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* advanced_sync_pancake
+#
+
+#. module: advanced_sync_pancake
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_sale_order__pancake_source_id
+#: model:ir.ui.menu,name:advanced_sync_pancake.menu_pancake_order_source
+msgid "Pancake source"
+msgstr "Kênh bán hàng"
+
+#. module: advanced_sync_pancake
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_sale_order__pancake_status
+msgid "Pancake Status"
+msgstr "Trạng thái pancake"
+
+#. module: advanced_sync_pancake
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_sale_order__internal_note
+msgid "Internal note"
+msgstr "Ghi chú nội bộ"
+
+#. module: advanced_sync_pancake
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_sale_order__is_paid
+msgid "Payment completed"
+msgstr "Đã thanh toán"
+
+#. module: advanced_sync_pancake
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_sale_order__transfer_money
+msgid "Transfer Money"
+msgstr "Tiền chuyển khoản"
+
+#. module: advanced_sync_pancake
+#: model:ir.actions.act_window,name:advanced_sync_pancake.pancake_shop_act_window
+#: model:ir.ui.menu,name:advanced_sync_pancake.pancake_shop_menu
+msgid "Pancake Shop"
+msgstr "Cửa hàng của Pancake"
+
+#. module: advanced_sync_pancake
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_sale_order__order_receiver
+msgid "Order Receiver"
+msgstr "Người nhận hàng"
+
+#. module: advanced_sync_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.view_order_form_advanced_sync
+msgid "Pancake Sync"
+msgstr "Đồng bộ Pancake"
+
+#. module: advanced_sync_pancake
+#: model:ir.actions.act_window,name:advanced_sync_pancake.action_pancake_branch
+#: model:ir.model,name:advanced_sync_pancake.model_pancake_branch
+#: model:ir.ui.menu,name:advanced_sync_pancake.pancake_branch_menu
+msgid "Brand"
+msgstr "Thương hiệu"
+
+#. module: advanced_sync_pancake
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_product_product__pancake_brand_ids
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_product_template__pancake_brand_ids
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.advanced_sync_pancake_product_template_only_form_view_inherit
+msgid "Brands"
+msgstr "Thương hiệu"
+
+#. module: advanced_sync_pancake
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_pancake_branch__name
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_pancake_order_source__name
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_pancake_shop__name
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_pancake_warehouse__name
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_yodee_ir_logging__name
+msgid "Name"
+msgstr "Tên"
+
+
+#. module: advanced_sync_pancake
+#: model:ir.actions.server,name:advanced_sync_pancake.model_sale_order_mass_action_check_paid
+msgid "Mark Payment completed"
+msgstr "Đánh dấu đã hoàn tất thanh toán"
+
+
+#. module: advanced_sync_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.delivery_order_view_search_inherit_pancake
+msgid "Done"
+msgstr "Hoàn tất"
+
+#. module: advanced_sync_pancake
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_sale_order__pancake_missing_info
+msgid "Lack of Information Product"
+msgstr "Thiếu thông tin sản phẩm từ Pancake"
+
+#. module: advanced_sync_pancake
+#. odoo-python
+#: code:addons/advanced_sync_pancake/models/sale_order_inherit.py:0
+msgid "Only users with Accounting permissions are allowed to perform this action."
+msgstr "Chỉ những người dùng có quyền Kế toán mới được phép thực hiện hành động này."
+
+#. module: advanced_sync_pancake
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_sale_order__is_account_perm
+msgid "Is Account Permission"
+msgstr "Có quyền kế toán"
+
+#. module: advanced_sync_pancake
+#: model:ir.actions.act_window,name:advanced_sync_pancake.action_pancake_branch
+#: model:ir.model,name:advanced_sync_pancake.model_pancake_branch
+#: model:ir.ui.menu,name:advanced_sync_pancake.menu_purchase_products
+#: model:ir.ui.menu,name:advanced_sync_pancake.pancake_branch_menu
+msgid "Brand"
+msgstr "Thương hiệu"
+
+#. module: advanced_sync_pancake
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_product_product__pancake_brand_ids
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_product_template__pancake_brand_ids
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.advanced_sync_pancake_product_template_only_form_view_inherit
+msgid "Brands"
+msgstr "Thương hiệu"
+
+#. module: sale
+#: model_terms:ir.ui.view,arch_db:sale.product_template_form_view
+msgid "Expense"
+msgstr "Giá vốn"
+
+#. module: stock_account
+#: model:ir.model.fields,field_description:stock_account.field_stock_lot__standard_price
+msgid "Cost"
+msgstr "Giá vốn"
+
+#. module: product
+#: model:ir.model.fields,field_description:product.field_product_product__standard_price
+#: model:ir.model.fields,field_description:product.field_product_template__standard_price
+#: model:ir.model.fields.selection,name:product.selection__product_pricelist_item__base__standard_price
+msgid "Cost"
+msgstr "Giá vốn"
+
+#. module: stock_account
+#: model:ir.model.fields,field_description:stock_account.field_stock_lot__standard_price
+msgid "Cost"
+msgstr "Giá vốn"
+
+#. module: sale
+#: model_terms:ir.ui.view,arch_db:sale.product_template_form_view
+msgid "Expense"
+msgstr "Giá vốn"
+
+#. module: product
+#: model:ir.model.fields,field_description:product.field_product_product__standard_price
+msgid "Cost"
+msgstr "Giá vốn"
+
+#. module: advanced_sync_pancake
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_product_product__combo_product
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_product_template__combo_product
+msgid "Product combo"
+msgstr "Sản phẩm Combo"
+
+#. module: advanced_sync_pancake
+#: model:ir.actions.server,name:advanced_sync_pancake.model_sale_order_mass_action_check_account_payable
+msgid "Mark Payment account payable"
+msgstr "Đánh dấu đã hoàn tất công nợ"
+
+#. module: advanced_sync_pancake
+#: model:ir.actions.server,name:advanced_sync_pancake.model_sale_order_mass_action_split_price_including_tax
+msgid "Split Price Including Tax"
+msgstr "Tách giá đơn giá sản phẩm (Có thuế)"
+
+#. module: advanced_sync_pancake
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_sale_order__account_payable
+msgid "Accounts payable"
+msgstr "Công nợ"
+
+#. module: advanced_sync_pancake
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_sale_order__pancake_source_id
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.sale_order_view_search_inherit_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.advanced_sync_pancake_view_sales_order_line_filter
+msgid "Pancake source"
+msgstr "Kênh bán hàng"
+
+#. module: advanced_sync_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.sale_order_view_search_inherit_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.advanced_sync_pancake_view_sales_order_line_filter
+msgid "Source from Facebook"
+msgstr "Kênh bán hàng Facebook"
+
+#. module: advanced_sync_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.sale_order_view_search_inherit_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.advanced_sync_pancake_view_sales_order_line_filter
+msgid "Source from Zalo"
+msgstr "Kênh bán hàng Zalo"
+
+#. module: advanced_sync_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.sale_order_view_search_inherit_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.advanced_sync_pancake_view_sales_order_line_filter
+msgid "Source from Yodee"
+msgstr "Kênh bán hàng Yodee"
+
+#. module: advanced_sync_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.sale_order_view_search_inherit_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.advanced_sync_pancake_view_sales_order_line_filter
+msgid "Source from Lazada"
+msgstr "Kênh bán hàng Lazada"
+
+#. module: advanced_sync_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.sale_order_view_search_inherit_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.advanced_sync_pancake_view_sales_order_line_filter
+msgid "Source from Instagram"
+msgstr "Kênh bán hàng Instagram"
+
+#. module: advanced_sync_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.sale_order_view_search_inherit_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.advanced_sync_pancake_view_sales_order_line_filter
+msgid "Source from B2B"
+msgstr "Kênh bán hàng B2B"
+
+#. module: advanced_sync_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.delivery_order_view_search_inherit_pancake
+msgid "Return Orders"
+msgstr "Đơn trả hàng"
+
+#. module: advanced_sync_misa
+#. odoo-python
+#: code:addons/advanced_sync_misa/models/stock_picking.py:0
+msgid ""
+"This WHOLESALE order is neither set for account payable nor fully paid.\n"
+"Unable to determine the delivery order."
+msgstr "Đây là đơn hàng BÁN SỈ chưa được tích công nợ hoặc thanh toán đầy đủ.\n"
+"Không thể xác định lệnh giao hàng. Vui lòng báo kế toán để xác nhận hoàn tất đơn hàng"
+
+#. module: advanced_sync_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.sale_order_view_search_inherit_pancake
+msgid "Create Date Pancake"
+msgstr "Ngày tạo Pancake"
+
+#. module: advanced_sync_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.product_template_search_view_pancake
+msgid "Is Combo Pancake"
+msgstr "Sản phẩm Combo Pancake"
+
+#. module: advanced_sync_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.product_template_search_view_pancake
+msgid "Is Sync Pancake"
+msgstr "Đồng bộ Pancake"
+
+#. module: advanced_sync_pancake
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_sale_order__combo_product_ids
+msgid "Combo Products"
+msgstr "Sản phẩm Combo"
+
+#. module: advanced_sync_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.sale_order_view_search_inherit_pancake
+msgid "Pancake Orders"
+msgstr "Đơn hàng Pancake"
+
+#. module: advanced_sync_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.sale_order_view_search_inherit_pancake
+msgid "Pancake Combo Orders"
+msgstr "Đơn hàng Combo Pancake"
+
+#. module: advanced_sync_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.view_pancake_order_source_form
+msgid "Pancake Order Source"
+msgstr "Kênh bán hàng"
+
+#. module: advanced_sync_pancake
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_sale_order__address_partner_detail
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_stock_picking__address_partner_detail
+msgid "Address Partner Detail"
+msgstr "Địa chỉ giao hàng chi tiết"
+
+#. module: advanced_sync_pancake
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_sale_order_line__price_including_tax
+msgid "Price Including Tax"
+msgstr "Thành tiền (Có thuế)"
+
+#. module: advanced_sync_pancake
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_sale_area__name
+msgid "Name"
+msgstr "Tên"
+
+#. module: advanced_sync_pancake
+#: model:ir.actions.act_window,name:advanced_sync_pancake.sale_area_act_window
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_res_partner__sale_area_id
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_res_users__sale_area_id
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_sale_order__sale_area_id
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_sale_order_line__sale_area_id
+#: model:ir.ui.menu,name:advanced_sync_pancake.sale_area_menu
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.advanced_sync_pancake_view_sales_order_line_filter
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.sale_area_tree_view
+msgid "Sale Area"
+msgstr "Khu vực bán hàng"
+
+#. module: advanced_sync_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.advanced_sync_pancake_view_sales_order_line_filter
+msgid "Customer"
+msgstr "Khách hàng"
+
+#. module: advanced_sync_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.view_order_form_advanced_sync
+msgid "Confirmation date"
+msgstr "Ngày xác nhận"
+
+#. module: advanced_sync_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.sale_order_view_search_inherit_pancake
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.view_order_form_advanced_sync
+msgid "Confirmation date"
+msgstr "Ngày xác nhận"
+
+
+#. module: sale
+#: model:ir.model.fields,field_description:sale.field_sale_order__validity_date
+msgid "Expiration"
+msgstr "Ngày xác nhận"
+
+#. module: advanced_sync_pancake
+#: model:ir.actions.server,name:advanced_sync_pancake.model_res_partner_mass_action_pancake_sync_customer
+#: model_terms:ir.ui.view,arch_db:advanced_sync_pancake.advanced_sync_pancake_res_partner_form_view
+msgid "Sync Pancake Customer"
+msgstr "Đồng bộ khách hàng Pancake"
+
+#. module: advanced_sync_pancake
+#: model:ir.model.fields,field_description:advanced_sync_pancake.field_pancake_order_source__default_customer
+msgid "Misa Customer"
+msgstr "Khách hàng Misa"

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="advanced_pos_view_partner_form" model="ir.ui.view">
+            <field name="name">advanced_pos.view_partner_form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="points"/>
+                    <field name="noti_expiry"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

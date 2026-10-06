@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="pancake_provinces_list_view" model="ir.ui.view">
+            <field name="name">pancake.provinces.list</field>
+            <field name="model">pancake.provinces</field>
+            <field name="arch" type="xml">
+                <list string="Pancake provinces" create="0" edit="0">
+                    <field name="name"/>
+                    <field name="api_province_id"/>
+                    <field name="country_code"/>
+                    <field name="name_en"/>
+                    <field name="new_id"/>
+                    <field name="region_type"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="pancake_provinces_form_view" model="ir.ui.view">
+            <field name="name">pancake.provinces.form</field>
+            <field name="model">pancake.provinces</field>
+            <field name="arch" type="xml">
+                <form string="Pancake provinces" create="0" edit="0">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="country_code"/>
+                            <field name="name_en"/>
+                            <field name="api_province_id"/>
+                            <field name="is_new_province"/>
+                        </group>
+                        <group>
+                            <field name="new_id"/>
+                            <field name="region_type"/>
+                            <field name="pancake_districts_ids" readonly="1"/>
+                            <field name="pancake_communes_ids" readonly="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_open_pancake_provinces" model="ir.actions.act_window">
+            <field name="name">Pancake Provinces</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pancake.provinces</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem
+                id="pancake_customer_menu_root"
+                name="Pancake Address"
+                parent="advanced_sync_pancake.pancake_connector_menu_root"
+                sequence="30"/>
+        <menuitem
+                id="pancake_provinces_menu_root"
+                name="Pancake Provinces"
+                action="action_open_pancake_provinces"
+                parent="advanced_sync_pancake.pancake_customer_menu_root"
+                sequence="10"/>
+        <menuitem
+                id="pancake_provinces_menu_contact"
+                name="Tỉnh/TP(Pancake)"
+                action="action_open_pancake_provinces"
+                parent="contacts.menu_localisation"
+                sequence="10"/>
+    </data>
+</odoo>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="stock_audit_misa_form_view" model="ir.ui.view">
+            <field name="name">stock_audit_misa_form_view</field>
+            <field name="model">stock.audit.misa</field>
+            <field name="arch" type="xml">
+                <form string="Sync Misa">
+                    <div class="oe_title">
+                        <h1>
+                            <field name="no" readonly="misa_status != 'not_synced'"/>
+                        </h1>
+
+                        <field name="misa_status" invisible="1"/>
+                        <field name="finish_sync_misa" invisible="1"/>
+
+                        <h2 style="color:#4d4d4d!important;text-align:left"
+                            invisible="id == False or misa_status != 'not_synced'">
+                            Misa: Unsynchronized
+                            <field name="noti_status_misa"/>
+                        </h2>
+
+                        <h2 style="color:green!important;text-align:left"
+                            invisible="id == False or misa_status != 'synced'">
+                            Misa: Synchronized
+                            <field name="noti_status_misa"/>
+                        </h2>
+
+                        <h2 style="color:red!important;text-align:left"
+                            invisible="id == False or misa_status != 'sync_failed'">
+                            Misa: Synchronization Failed
+                            <field name="noti_status_misa"/>
+                        </h2>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="location_id"
+                                   force_save="1"
+                                   readonly="misa_status != 'not_synced'"/>
+
+                            <field name="employee_ids"
+                                   widget="many2many_tags"
+                                   readonly="misa_status != 'not_synced'"/>
+
+                            <field name="about" readonly="misa_status != 'not_synced'"/>
+                        </group>
+
+                        <group>
+                            <field name="audit_date"
+                                   required="1"
+                                   readonly="misa_status != 'not_synced'"/>
+
+                            <field name="no"
+                                   required="1"
+                                   readonly="misa_status != 'not_synced'"/>
+
+                            <field name="ref_date"
+                                   required="1"
+                                   readonly="misa_status != 'not_synced'"/>
+                        </group>
+
+<!--                        <field name="stock_quant_ids" nolabel="1" force_save="1" readonly="1">-->
+<!--                            <list limit="20"-->
+<!--                                  default_order="location_id product_id"-->
+<!--                                  editable="bottom"-->
+<!--                                  create="1" edit="1" import="1"-->
+<!--                                  js_class="inventory_report_list"-->
+<!--                                  class="o_inventory_adjustments style_stock_quant_ids">-->
+
+<!--                                <field name="location_id"-->
+<!--                                       invisible="context.get('hide_location', False)"-->
+<!--                                       options="{'no_create': True}"/>-->
+
+<!--                                <field name="storage_category_id"-->
+<!--                                       groups="stock.group_stock_storage_categories"-->
+<!--                                       invisible="context.get('hide_location', False)"-->
+<!--                                       options="{'no_create': True}" optional="hidden"/>-->
+
+<!--                                <field name="cyclic_inventory_frequency"-->
+<!--                                       invisible="context.get('hide_location', False)"-->
+<!--                                       options="{'no_create': True}"-->
+<!--                                       optional="hidden"/>-->
+
+<!--                                <field name="product_id" options="{'no_create': True}"/>-->
+<!--                                <field name="product_categ_id" optional="hide"/>-->
+
+<!--                                <field name="lot_id"-->
+<!--                                       groups="stock.group_production_lot"-->
+<!--                                       invisible="context.get('hide_lot', False)"-->
+<!--                                       force_save="1"/>-->
+
+<!--                                <field name="quantity_misa" groups="base.group_no_one" optional="hide"/>-->
+
+<!--                                <field name="package_id" groups="stock.group_tracking_lot"/>-->
+<!--                                <field name="company_id" optional="hide"/>-->
+<!--                                <field name="owner_id" groups="stock.group_tracking_owner"-->
+<!--                                       options="{'no_create': True}"/>-->
+
+<!--                                <field name="available_quantity"-->
+<!--                                       string="Available Quantity"-->
+<!--                                       decoration-danger="available_quantity &lt; 0"-->
+<!--                                       optional="hidden"/>-->
+
+<!--                                <field name="quantity"-->
+<!--                                       optional="show"-->
+<!--                                       decoration-warning="quantity &lt; 0"-->
+<!--                                       string="On Hand Quantity"/>-->
+
+<!--                                <field name="product_uom_id" groups="uom.group_uom" string="UoM"/>-->
+
+<!--                                <field name="inventory_quantity" widget="counted_quantity_widget"/>-->
+
+<!--                                <field name="inventory_diff_quantity"-->
+<!--                                       string="Difference"-->
+<!--                                       invisible="not inventory_quantity_set"-->
+<!--                                       decoration-muted="inventory_diff_quantity == 0"-->
+<!--                                       decoration-danger="inventory_diff_quantity &lt; 0"-->
+<!--                                       decoration-success="inventory_diff_quantity &gt; 0"-->
+<!--                                       decoration-bf="inventory_diff_quantity != 0"/>-->
+
+<!--                                <field name="user_id" string="User" optional="hide"/>-->
+<!--                                <field name="last_count_date" optional="hide"/>-->
+<!--                            </list>-->
+<!--                        </field>-->
+
+                        <field name="stock_quant_sync" nolabel="1" force_save="1" readonly="1">
+                            <list limit="20" default_order="location_id product_id">
+                                <field name="location_id"/>
+                                <field name="product_id"/>
+                                <field name="lot_id" optional="hiden"/>
+                                <field name="quantity_on_book" sum="sum1"/>
+                                <field name="quantity_audit"  sum="sum2"/>
+                                <field name="diff_quantity"
+                                       decoration-muted="diff_quantity == 0"
+                                       decoration-danger="diff_quantity &lt; 0"
+                                       decoration-success="diff_quantity &gt; 0"
+                                       decoration-bf="diff_quantity != 0"/>
+                                <field name="value_stock_misa"  sum="sum3"/>
+                            </list>
+                        </field>
+                    </group>
+
+                    <footer>
+                        <button name="sync_misa_stock_picking_in_audit"
+                                string="Sync Misa"
+                                type="object"
+                                class="btn-primary"
+                                invisible="misa_status == 'synced'"/>
+
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="stock_audit_misa_view_list" model="ir.ui.view">
+            <field name="name">stock_audit_misa.view_list</field>
+            <field name="model">stock.audit.misa</field>
+            <field name="arch" type="xml">
+                <list string="stock_audit_misa_list" create="0" edit="0">
+                    <field name="no"/>
+                    <field name="location_id" required="1" force_save="1"/>
+                    <field name="ref_date"/>
+                    <field name="misa_status"/>
+                </list>
+            </field>
+        </record>
+
+
+        <record id="action_stock_audit_misa" model="ir.actions.act_window">
+            <field name="name">Sync Misa</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.audit.misa</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="stock_audit_misa_form_view"/>
+            <field name="target">new</field>
+        </record>
+        <record id="action_stock_audit_misa_full" model="ir.actions.act_window">
+            <field name="name">Stock Audit(Misa)</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.audit.misa</field>
+            <field name="context">{'create': False, 'edit': False}</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+
+        <menuitem id="menu_stock_audit_misa"
+                  name="Stock Audit(Misa)"
+                  action="action_stock_audit_misa_full"
+                  parent="stock.menu_warehouse_report"
+                  sequence="1000"/>
+    </data>
+</odoo>

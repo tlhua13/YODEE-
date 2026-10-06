@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="advanced_pos_templates" xml:space="preserve">
+    <t t-inherit="point_of_sale.OrderReceipt"
+       t-inherit-mode="extension">
+
+        <!-- Thêm thông tin Customer sau ReceiptHeader -->
+        <xpath expr="//ReceiptHeader" position="after">
+            <div class="d-flex flex-column align-items-center">
+                <div>
+                    <span class="tracking-number fs-4">HÓA ĐƠN THANH TOÁN</span>
+                </div>
+                <div t-if="props.data.name">
+                    <span>Số hóa đơn:</span>
+                    <span class="ms-1" t-esc="props.data.name"/>
+                </div>
+                <div>
+                    <span>Ngày:</span>
+                    <span class="ms-1" t-esc="props.data.date_pos"/>
+                </div>
+            </div>
+
+            <div class="d-flex flex-column align-items-start my-2">
+                <t t-if="props.data.cashier">
+                    <span>
+                        <strong>Thu ngân: </strong>
+                        <t class="ms-1" t-esc="props.data.cashier"/>
+                    </span>
+                </t>
+
+                <t t-if="props.data.partner">
+                    <span>
+                        <strong>Khách hàng: </strong>
+                        <t class="ms-1" t-esc="props.data.partner.name"/>
+                    </span>
+                </t>
+            </div>
+        </xpath>
+
+        <!-- Thêm lời cảm ơn ở cuối hóa đơn -->
+        <xpath expr="//div[hasclass('pos-receipt-order-data')][last()]" position="after">
+            <div class="text-center mt-2">
+                <span>Xin cảm ơn Quý khách, hẹn gặp lại!</span>
+            </div>
+        </xpath>
+
+    </t>
+
+</templates>

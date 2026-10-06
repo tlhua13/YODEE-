@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--Root-->
+        <menuitem id="advanced_account_misa_root" name="Misa" sequence="200" web_icon="advanced_sync_misa,static/description/icon.png" groups="base.group_no_one,base.group_system"/>
+        <!--Dictionary-->
+        <menuitem id="advanced_account_misa_dictionary_menu" name="Dictionary" sequence="1" parent="advanced_account_misa_root"/>
+
+    </data>
+</odoo>

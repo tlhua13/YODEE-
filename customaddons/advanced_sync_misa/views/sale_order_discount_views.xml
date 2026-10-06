@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="sale_order_line_wizard_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.line.wizard.form.inherit</field>
+            <field name="model">sale.order.discount</field>
+            <field name="inherit_id" ref="sale.sale_order_line_wizard_form"/>
+            <field name="arch" type="xml">
+                <field name="discount_percentage" position="after">
+                    <field name="discount_type_id"
+                           options="{'no_create': True}"/>
+                </field>
+                <field name="discount_type" position="after">
+                    <field name="yodee_discount_type" widget="radio"/>
+                </field>
+                <field name="discount_type" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

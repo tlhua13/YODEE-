@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        Form view-->
+        <record id="advanced_sync_misa_product_product_inherit_form_view" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.product_product_inherit_form_view</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='standard_price']" position="attributes">
+                    <attribute name="groups">advanced_sync_misa.group_view_standard_price,base.group_system</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_change_uom']" position="replace"/>
+
+            </field>
+        </record>
+
+<!--        List view-->
+         <record id="advanced_sync_misa_product_product_inherit_list_view" model="ir.ui.view">
+            <field name="name">advanced_sync_misa.product_product_inherit_list_view</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='standard_price']" position="attributes">
+                    <attribute name="groups">advanced_sync_misa.group_view_standard_price,base.group_system</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

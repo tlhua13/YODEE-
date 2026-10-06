@@ -1,0 +1,90 @@
+#. module: advanced_pos
+#: model:ir.ui.menu,name:advanced_pos.advanced_pos_pos_order_line_inherit_menu
+msgid "Order Line"
+msgstr "Chi tiết đơn hàng"
+
+#. module: advanced_pos
+#: model:ir.model.fields,field_description:advanced_pos.field_pos_order_line__brand_ids
+#: model_terms:ir.ui.view,arch_db:advanced_pos.view_pos_order_line_filter_inherit
+msgid "Brand"
+msgstr "Thương hiệu"
+
+#. module: advanced_pos
+#: model:ir.model.fields,field_description:advanced_pos.field_pos_order_line__seller_id
+#: model_terms:ir.ui.view,arch_db:advanced_pos.view_pos_order_line_filter_inherit
+msgid "Seller"
+msgstr "Nhân viên"
+
+#. module: advanced_pos
+#: model_terms:ir.ui.view,arch_db:advanced_pos.view_pos_order_line_filter_inherit
+msgid "Seller area"
+msgstr "Điểm bán"
+
+#. module: advanced_pos
+#: model_terms:ir.ui.view,arch_db:advanced_pos.view_pos_order_line_filter_inherit
+msgid "Product"
+msgstr "Sản phẩm"
+
+#. module: advanced_pos
+#: model:ir.actions.act_window,name:advanced_pos.pos_brand_report_inherit_act_window
+msgid "POS Brand Report"
+msgstr "Báo cáo Thương hiệu"
+
+#. module: advanced_pos
+#: model:ir.ui.menu,name:advanced_pos.menu_pos_brand_report
+msgid "Brands report"
+msgstr "Thương hiệu"
+
+#. module: advanced_pos
+#: model:ir.model.fields,field_description:advanced_pos.field_pos_order_line__order_note
+msgid "Note"
+msgstr "Ghi chú"
+
+#. module: point_of_sale
+#. odoo-javascript
+#: code:addons/point_of_sale/static/src/app/store/pos_store.js:0
+msgid "Served by %s"
+msgstr "Thu ngân %s"
+
+#. module: point_of_sale
+#: model:ir.model.fields,help:point_of_sale.field_pos_session__cash_register_difference
+msgid ""
+"Difference between the theoretical closing balance and the real closing "
+"balance."
+msgstr "Điểm thưởng còn lại"
+
+#. module: point_of_sale
+#. odoo-javascript
+#: code:addons/point_of_sale/static/src/app/screens/partner_list/partner_list.xml:0
+#: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_config_tree
+msgid "Balance"
+msgstr "Điểm thưởng còn lại"
+
+#. module: point_of_sale
+#: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_config_kanban
+msgid "<span>Balance</span>"
+msgstr "Điểm thưởng còn lại"
+
+#. module: point_of_sale
+#: model_terms:ir.ui.view,arch_db:point_of_sale.product_product_tree_view
+#: model_terms:ir.ui.view,arch_db:point_of_sale.product_template_search_view_pos
+#: model_terms:ir.ui.view,arch_db:point_of_sale.product_template_tree_view
+msgid "POS Product Category"
+msgstr "Nhà phân phối"
+
+#. module: point_of_sale
+#: model_terms:ir.ui.view,arch_db:point_of_sale.product_pos_category_tree_view
+msgid "PoS Product Category"
+msgstr "Nhà phân phối"
+
+#. module: point_of_sale
+#: model:ir.actions.act_window,name:point_of_sale.product_pos_category_action
+#: model:ir.ui.menu,name:point_of_sale.menu_products_pos_category
+#: model_terms:ir.ui.view,arch_db:point_of_sale.res_config_settings_view_form
+msgid "PoS Product Categories"
+msgstr "Nhà phân phối"
+
+#. module: point_of_sale
+#: model_terms:ir.ui.view,arch_db:point_of_sale.product_pos_category_form_view
+msgid "Pos Product Categories"
+msgstr "Nhà phân phối"
